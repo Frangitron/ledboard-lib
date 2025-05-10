@@ -1,5 +1,6 @@
 [build-system]
 requires = [
+  "setuptools>=46.0",
   "pythonarduinoserial@git+https://github.com/MrFrangipane/python-arduino-serial"
 ]
 
@@ -22,6 +23,4 @@ classifiers = [
 keywords = ["python", "frangitron"]
 dynamic = ["version"]
 
-[build-system]
-requires = ["setuptools>=46.0"]
 build-backend = "setuptools.build_meta"
