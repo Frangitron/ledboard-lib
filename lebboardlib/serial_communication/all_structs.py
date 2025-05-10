@@ -1,4 +1,4 @@
-from ledboardclientfull.serial_communication import c_commands, c_structs
+from lebboardlib.serial_communication import c_commands, c_structs
 
 
 def get():
