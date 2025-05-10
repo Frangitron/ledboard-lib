@@ -3,6 +3,7 @@ requires = [
   "setuptools>=46.0",
   "pythonarduinoserial@git+https://github.com/MrFrangipane/python-arduino-serial"
 ]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "ledboardlib"
@@ -22,5 +23,3 @@ classifiers = [
 ]
 keywords = ["python", "frangitron"]
 dynamic = ["version"]
-
-build-backend = "setuptools.build_meta"
