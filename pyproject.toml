@@ -1,7 +1,7 @@
 [build-system]
 requires = [
   "setuptools>=46.0",
-  "pythonarduinoserial@git+https://github.com/MrFrangipane/python-arduino-serial"
+  "pythonarduinoserial@git+https://github.com/Frangitron/python-arduino-serial"
 ]
 build-backend = "setuptools.build_meta"
 
