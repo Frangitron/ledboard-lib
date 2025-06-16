@@ -121,12 +121,13 @@ def set_speed_z(port: str, speed: int):
 
 def blue_pipes(port: str):
     strand_led_count = 150
-    strand_count = 1
+    strand_count = 6
 
     board = BoardApi(serial_port=port)
     configuration = board.get_configuration()
     configuration.gpio_led_first = GpioEnum.NoonBoard.value
     configuration.led_count = strand_led_count
+    configuration.led_color_format = ColorFormat.GRB.value
     board.set_configuration(configuration)
 
     print(configuration)
