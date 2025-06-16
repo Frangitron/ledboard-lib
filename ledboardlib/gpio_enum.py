@@ -2,5 +2,6 @@ from enum import Enum
 
 
 class GpioEnum(Enum):
-    NoonBoard = 12
-    AllanBoard = 6
+    LedsNoonBoard = 12
+    LedsAllanBoard = 6
+    ButtonBluePipes = 9

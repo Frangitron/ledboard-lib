@@ -12,6 +12,7 @@ class HardwareConfigurationStruct:
     gpio_admin_mode: IntegerType() = 1  # absent in Jan 2024 LedBoard
     gpio_dmx_input: IntegerType() = 5  # absent in Jan 2024 LedBoard
     gpio_led_first: IntegerType() = 6  # default for Jan 2024 LedBoard
+    gpio_button: IntegerType() = 9
 
     firmware_revision: IntegerType() = 0
 

@@ -125,9 +125,10 @@ def blue_pipes(port: str):
 
     board = BoardApi(serial_port=port)
     configuration = board.get_configuration()
-    configuration.gpio_led_first = GpioEnum.NoonBoard.value
-    configuration.led_count = strand_led_count
+    configuration.gpio_button = GpioEnum.ButtonBluePipes.value
+    configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
     configuration.led_color_format = ColorFormat.GRB.value
+    configuration.led_count = strand_led_count
     board.set_configuration(configuration)
 
     print(configuration)
