@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from pythonarduinoserial.types import *
 
-from lebboardlib.sampling_point import SamplingPoint
+from ledboardlib.sampling_point import SamplingPoint
 
 
 @dataclass

@@ -4,7 +4,7 @@ import sys
 
 from pythonarduinoserial.c_header_exporter import CHeaderExporter
 
-from lebboardlib.serial_communication import all_structs
+from ledboardlib.serial_communication import all_structs
 
 
 def make_c_header(filepath: str):

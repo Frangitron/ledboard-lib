@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from lebboardlib.color_format import ColorFormat
+from ledboardlib.color_format import ColorFormat
 
 
 @dataclass

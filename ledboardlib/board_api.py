@@ -2,8 +2,8 @@ import time
 
 from pythonarduinoserial.communicator import SerialCommunicator
 
-from lebboardlib.sampling_point import SamplingPoint
-from lebboardlib.serial_communication import c_commands, c_structs, all_structs
+from ledboardlib.sampling_point import SamplingPoint
+from ledboardlib.serial_communication import c_commands, c_structs, all_structs
 
 
 class BoardApi:
