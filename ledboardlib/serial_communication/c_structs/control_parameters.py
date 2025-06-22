@@ -27,6 +27,7 @@ class ControlParametersStruct:
     runner_b: IntegerType() = 0
 
     runner_trigger: IntegerType() = 0
+    are_colors_inverted: IntegerType() = 0
 
     # > 0: additive, < 0: multiply
     mask_x1: IntegerType() = 0
