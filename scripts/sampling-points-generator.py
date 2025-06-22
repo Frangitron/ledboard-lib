@@ -121,7 +121,8 @@ def set_speed_z(port: str, speed: int):
 
 def blue_pipes(port: str):
     strand_led_count = 150
-    strand_count = 8
+    strand_count = 6
+    pixel_doubling = 1
 
     board = BoardApi(serial_port=port)
     configuration = board.get_configuration()
@@ -135,16 +136,16 @@ def blue_pipes(port: str):
 
     sampling_points = list()
     for r in range(strand_count):
-        for s in range(int(strand_led_count / 2)):
-            index = (r * int(strand_led_count / 2)) + s
+        for s in range(int(strand_led_count / pixel_doubling)):
+            index = (r * int(strand_led_count / pixel_doubling)) + s
             new = SamplingPoint(
                 index=index,
-                x=s * 2,
+                x=s * pixel_doubling,
                 y=r,
                 universe_number=0,
                 universe_channel=index * 3,
                 color_format=ColorFormat.GRB,
-                led_indices=[index * 2, index * 2 + 1]
+                led_indices=[index * pixel_doubling + i for i in range(pixel_doubling)]
             )
             sampling_points.append(new)
 
@@ -154,7 +155,7 @@ def blue_pipes(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM5"
+    com = "COM7"
     # print_config(com)
     # waveshare_10x16(com)
     # strip_5m(com)
