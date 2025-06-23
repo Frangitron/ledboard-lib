@@ -17,6 +17,9 @@ class BoardApi:
     def __del__(self):
         self.serial_communicator.disconnect()
 
+    def get_hardware_info(self) -> c_structs.HardwareInfoStruct:
+        return self.serial_communicator.receive(c_structs.HardwareInfoStruct)
+
     def set_configuration(self, configuration: c_structs.HardwareConfigurationStruct):
         self.serial_communicator.send(configuration)
 

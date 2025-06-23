@@ -31,6 +31,16 @@ def make_wave_share_points():
 def waveshare_10x16(port: str):
     board = BoardApi(serial_port=port)
     configuration = board.get_configuration()
+    configuration.name = "10x16"
+    configuration.gpio_button_a = 2
+    configuration.gpio_button_b = 3
+    configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
+    configuration.led_color_format = ColorFormat.RGB.value
+    configuration.led_count = 160
+    board.set_configuration(configuration)
+
+    print(configuration)
+
     board.set_sampling_points(make_wave_share_points())
 
 
@@ -70,12 +80,19 @@ def strip_5m(port: str):
     board.set_sampling_points(sampling_points)
 
 
-def print_config(port: str):
-    print("Current configuration:")
+def print_info(port: str):
     board = BoardApi(serial_port=port)
+
+    print("-- Hardware:")
+    info = board.get_hardware_info()
+    for key, value in vars(info).items():
+        print(f"{key} = {value}")
+
+    print("-- Current configuration:")
     configuration = board.get_configuration()
     for key, value in vars(configuration).items():
         print(f"{key} = {value}")
+
     print('-' * 20)
 
 
@@ -156,11 +173,11 @@ def blue_pipes(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM7"
-    # print_config(com)
+    com = "COM9"
+    print_info(com)
     # waveshare_10x16(com)
     # strip_5m(com)
     #rect_256(com)
     # set_speed_z(com, 1)
-    blue_pipes(com)
+    #blue_pipes(com)
     print("Done.")

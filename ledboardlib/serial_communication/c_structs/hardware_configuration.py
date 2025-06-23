@@ -5,17 +5,14 @@ from pythonarduinoserial.types import *
 
 @dataclass
 class HardwareConfigurationStruct:
-    name: StringType(8) = "Board"  # includes null terminator, length 8 to avoid manual bytes padding
 
-    hardware_id: BytesType(8) = BytesDefault(8)
-    hardware_revision: IntegerType() = 0
+    name: StringType(8) = "Board"  # 7 char max (includes null terminator, length 8 to avoid manual bytes padding)
+
     gpio_admin_mode: IntegerType() = 1  # absent in Jan 2024 LedBoard
     gpio_dmx_input: IntegerType() = 5  # absent in Jan 2024 LedBoard
     gpio_led_first: IntegerType() = 6  # default for Jan 2024 LedBoard
     gpio_button_a: IntegerType() = 9
     gpio_button_b: IntegerType() = 9
-
-    firmware_revision: IntegerType() = 0
 
     wifi_password: StringType(16) = "0123456789ABCDE"  # includes null terminator, length 16 to avoid manual bytes padding
     wifi_ip_address: BytesType(4) = bytes([192, 168, 0, 201])
