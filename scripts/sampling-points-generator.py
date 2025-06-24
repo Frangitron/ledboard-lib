@@ -97,11 +97,15 @@ def rect_256(port: str):
     board = BoardApi(serial_port=port)
     configuration = board.get_configuration()
     configuration.led_count = 256
+    configuration.gpio_button_a = 2
+    configuration.gpio_button_b = 3
+    configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
+    configuration.led_color_format = ColorFormat.GRB
     board.set_configuration(configuration)
 
     index = 0
     led_offset = 0
-    sampling_points = list()  # make_wave_share_points()
+    sampling_points = list()
     point_offset = len(sampling_points)
 
     for y in range(16):
@@ -143,7 +147,7 @@ def blue_pipes(port: str):
     configuration.gpio_button_a = GpioEnum.ButtonBluePipesA.value
     configuration.gpio_button_b = GpioEnum.ButtonBluePipesB.value
     configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
-    configuration.led_color_format = ColorFormat.GRB.value
+    configuration.led_color_format = ColorFormat.GRB
     configuration.led_count = strand_led_count
     board.set_configuration(configuration)
 
@@ -170,11 +174,11 @@ def blue_pipes(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM9"
-    print_info(com)
+    com = "COM11"
+    # print_info(com)
     # waveshare_10x16(com)
     # strip_5m(com)
-    #rect_256(com)
+    rect_256(com)
     # set_speed_z(com, 1)
     #blue_pipes(com)
     print("Done.")
