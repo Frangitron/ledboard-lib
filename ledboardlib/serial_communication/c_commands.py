@@ -1,37 +1,36 @@
+__all__ = [
+    "BeginSamplePointsReceptionCommand",
+    "EndSamplePointsReceptionCommand",
+    "RebootInBootloaderModeCommand",
+    "SaveControlParametersCommand",
+    "SaveSamplingPointsCommand",
+]
 from dataclasses import dataclass
 
-from pythonarduinoserial.types import *
+from pythonarduinoserial.base_c_struct import BaseCStruct
+from pythonarduinoserial.types import IntegerType
 
 
 @dataclass
-class BeginSamplePointsReceptionCommand:
+class BeginSamplePointsReceptionCommand(BaseCStruct):
     count: IntegerType() = 0
 
 
 @dataclass
-class EndSamplePointsReceptionCommand:
+class EndSamplePointsReceptionCommand(BaseCStruct):
     unused: IntegerType() = 0
 
 
 @dataclass
-class RebootInBootloaderModeCommand:
+class RebootInBootloaderModeCommand(BaseCStruct):
     unused: IntegerType() = 0
 
 
 @dataclass
-class SaveControlParametersCommand:
+class SaveControlParametersCommand(BaseCStruct):
     unused: IntegerType() = 0  # FIXME
 
 
 @dataclass
-class SaveSamplingPointsCommand:
+class SaveSamplingPointsCommand(BaseCStruct):
     unused: IntegerType() = 0  # FIXME
-
-
-__all__ = [
-    BeginSamplePointsReceptionCommand,
-    EndSamplePointsReceptionCommand,
-    RebootInBootloaderModeCommand,
-    SaveControlParametersCommand,
-    SaveSamplingPointsCommand,
-]

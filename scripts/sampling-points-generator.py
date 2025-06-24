@@ -2,10 +2,7 @@
 LEGACY code waiting for JSON files
 """
 
-from ledboardlib.board_api import BoardApi
-from ledboardlib.gpio_enum import GpioEnum
-from ledboardlib.sampling_point import SamplingPoint
-from ledboardlib.color_format import ColorFormat
+from ledboardlib import BoardApi, SamplingPoint, GpioEnum, ColorFormat
 
 
 def make_wave_share_points():

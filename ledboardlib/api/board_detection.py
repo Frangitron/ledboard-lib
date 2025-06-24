@@ -1,6 +1,6 @@
 import serial.tools.list_ports
 
-from ledboardlib.board_api import BoardApi
+from ledboardlib.api.board import BoardApi
 from ledboardlib.listed_board import ListedBoard
 
 
