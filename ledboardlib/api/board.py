@@ -11,8 +11,7 @@ from ledboardlib.hardware_info.hardware_info import HardwareInfo
 from ledboardlib.sampling_point.c_struct.led_info import LedInfoStruct
 from ledboardlib.sampling_point.c_struct.sample_point import SamplePointStruct
 from ledboardlib.sampling_point.sampling_point import SamplingPoint
-from ledboardlib.serial_communication import all_structs
-from ledboardlib.serial_communication.c_commands import *
+from ledboardlib.serial_communication import all_structs, c_commands
 
 
 class BoardApi:
@@ -50,16 +49,16 @@ class BoardApi:
         if not sampling_points:
             return
 
-        self.serial_communicator.send(BeginSamplePointsReceptionCommand(len(sampling_points)))
+        self.serial_communicator.send(c_commands.BeginSamplePointsReceptionCommand(len(sampling_points)))
         for sampling_point in sampling_points:
             self.serial_communicator.send(SamplePointStruct.from_base(sampling_point))
             for led_index in sampling_point.led_indices:
                 self.serial_communicator.send(LedInfoStruct(sampling_point.index, led_index))
 
         time.sleep(0.6)
-        self.serial_communicator.send(SaveSamplingPointsCommand())
+        self.serial_communicator.send(c_commands.SaveSamplingPointsCommand())
         time.sleep(0.6)
-        self.serial_communicator.send(EndSamplePointsReceptionCommand())
+        self.serial_communicator.send(c_commands.EndSamplePointsReceptionCommand())
 
     def get_control_parameters(self) -> ControlParameters | None:
         c_struct = self.serial_communicator.receive(ControlParametersStruct)
@@ -72,7 +71,7 @@ class BoardApi:
         self.serial_communicator.send(ControlParametersStruct.from_base(parameters))
 
     def save_control_parameters(self):
-        self.serial_communicator.send(SaveControlParametersCommand())
+        self.serial_communicator.send(c_commands.SaveControlParametersCommand())
 
     def reboot_in_bootloader_mode(self):
-        self.serial_communicator.send(RebootInBootloaderModeCommand())
+        self.serial_communicator.send(c_commands.RebootInBootloaderModeCommand())
