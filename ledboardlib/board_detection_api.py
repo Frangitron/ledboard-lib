@@ -13,7 +13,7 @@ class BoardDetectionApi:
             try:
                 board = BoardApi(serial_port=port_name)
                 board_info = board.get_hardware_info()
-            except serial.serialutil.SerialException:
+            except IOError:
                 board_info = None
 
             listed_boards.append(ListedBoard(
