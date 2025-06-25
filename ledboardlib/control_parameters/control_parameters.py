@@ -26,6 +26,7 @@ class ControlParameters:
 
     runner_trigger: bool
     are_colors_inverted: bool
+    is_noise_on: bool
 
     # > 0: additive, < 0: multiply
     mask_x1: int

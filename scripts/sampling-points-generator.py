@@ -144,6 +144,7 @@ def blue_pipes(port: str):
 
     board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
+    configuration.name = "BluPipe"
     configuration.gpio_button_a = GpioEnum.ButtonBluePipesA.value
     configuration.gpio_button_b = GpioEnum.ButtonBluePipesB.value
     configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
@@ -174,11 +175,11 @@ def blue_pipes(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM11"
+    com = "COM5"
     # print_info(com)
     # waveshare_10x16(com)
     # strip_5m(com)
-    rect_256(com)
+    # rect_256(com)
     # set_speed_z(com, 1)
-    #blue_pipes(com)
+    blue_pipes(com)
     print("Done.")

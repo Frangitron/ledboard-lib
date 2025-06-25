@@ -35,6 +35,7 @@ class ControlParametersStruct(BaseCStruct):
 
     runner_trigger: IntegerType() = 0
     are_colors_inverted: IntegerType() = 0
+    is_noise_on: IntegerType() = 1
 
     # > 0: additive, < 0: multiply
     mask_x1: IntegerType() = 0
@@ -65,6 +66,7 @@ class ControlParametersStruct(BaseCStruct):
             runner_b=base.runner_b,
             runner_trigger=int(base.runner_trigger),
             are_colors_inverted=int(base.are_colors_inverted),
+            is_noise_on=int(base.is_noise_on),
             mask_x1=base.mask_x1,
             mask_x2=base.mask_x2,
             mask_y1=base.mask_y1,
@@ -92,6 +94,7 @@ class ControlParametersStruct(BaseCStruct):
             runner_b=int(self.runner_b),
             runner_trigger=bool(self.runner_trigger),
             are_colors_inverted=bool(self.are_colors_inverted),
+            is_noise_on=bool(self.is_noise_on),
             mask_x1=int(self.mask_x1),
             mask_x2=int(self.mask_x2),
             mask_y1=int(self.mask_y1),
