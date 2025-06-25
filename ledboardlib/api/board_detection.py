@@ -3,6 +3,8 @@ import serial.tools.list_ports
 from ledboardlib.api.board import BoardApi
 from ledboardlib.listed_board import ListedBoard
 
+from pythonarduinoserial.usbserial.exception import UsbSerialException
+
 
 class BoardDetectionApi:
 
@@ -13,7 +15,7 @@ class BoardDetectionApi:
             try:
                 board = BoardApi(serial_port=port_name)
                 board_info = board.get_hardware_info()
-            except IOError:
+            except UsbSerialException:
                 board_info = None
 
             listed_boards.append(ListedBoard(
