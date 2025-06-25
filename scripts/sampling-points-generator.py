@@ -26,7 +26,7 @@ def make_wave_share_points():
 
 
 def waveshare_10x16(port: str):
-    board = BoardApi(serial_port=port)
+    board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
     configuration.name = "10x16"
     configuration.gpio_button_a = 2
@@ -42,7 +42,7 @@ def waveshare_10x16(port: str):
 
 
 def strip_5m(port: str):
-    board = BoardApi(serial_port=port)
+    board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
     configuration.led_count = 300
     board.set_configuration(configuration)
@@ -78,7 +78,7 @@ def strip_5m(port: str):
 
 
 def print_info(port: str):
-    board = BoardApi(serial_port=port)
+    board = BoardApi(serial_port_name=port)
 
     print("-- Hardware:")
     info = board.get_hardware_info()
@@ -94,7 +94,7 @@ def print_info(port: str):
 
 
 def rect_256(port: str):
-    board = BoardApi(serial_port=port)
+    board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
     configuration.led_count = 256
     configuration.gpio_button_a = 2
@@ -128,7 +128,7 @@ def rect_256(port: str):
 
 
 def set_speed_z(port: str, speed: int):
-    board = BoardApi(serial_port=port)
+    board = BoardApi(serial_port_name=port)
     parameters = board.get_control_parameters()
     if parameters is None:
         print("No parameters received !")
@@ -142,7 +142,7 @@ def blue_pipes(port: str):
     strand_count = 6
     pixel_doubling = 1
 
-    board = BoardApi(serial_port=port)
+    board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
     configuration.gpio_button_a = GpioEnum.ButtonBluePipesA.value
     configuration.gpio_button_b = GpioEnum.ButtonBluePipesB.value

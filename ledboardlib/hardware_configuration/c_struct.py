@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from ipaddress import IPv4Address
 
 from pythonarduinoserial.base_c_struct import BaseCStruct
-from pythonarduinoserial.python_extension import without_terminator
+from pythonarduinoserial.python_extension import stripped_without_terminator
 from pythonarduinoserial.types import *
 
 from ledboardlib.color_format import ColorFormat
@@ -56,13 +56,13 @@ class HardwareConfigurationStruct(BaseCStruct):
 
     def to_base(self) -> HardwareConfiguration:
         return HardwareConfiguration(
-            name=without_terminator(self.name),
+            name=stripped_without_terminator(self.name),
             gpio_admin_mode=int(self.gpio_admin_mode),
             gpio_dmx_input=int(self.gpio_dmx_input),
             gpio_led_first=int(self.gpio_led_first),
             gpio_button_a=int(self.gpio_button_a),
             gpio_button_b=int(self.gpio_button_b),
-            wifi_password=without_terminator(self.wifi_password),
+            wifi_password=stripped_without_terminator(self.wifi_password),
             wifi_ip_address=IPv4Address(self.wifi_ip_address),
             wifi_gateway=IPv4Address(self.wifi_gateway),
             wifi_subnet=IPv4Address(self.wifi_subnet),

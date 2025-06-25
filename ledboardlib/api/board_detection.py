@@ -13,7 +13,7 @@ class BoardDetectionApi:
         listed_boards = list()
         for port_name in port_names:
             try:
-                board = BoardApi(serial_port=port_name)
+                board = BoardApi(serial_port_name=port_name)
                 board_info = board.get_hardware_info()
             except UsbSerialException:
                 board_info = None

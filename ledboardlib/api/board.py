@@ -1,7 +1,11 @@
+from copy import copy
+import os
+import shutil
 import time
 
 from pythonarduinoserial.communicator import SerialCommunicator
 
+from ledboardlib import windows_drives
 from ledboardlib.control_parameters.c_struct import ControlParametersStruct
 from ledboardlib.control_parameters.control_parameters import ControlParameters
 from ledboardlib.hardware_configuration.c_struct import HardwareConfigurationStruct
@@ -24,14 +28,14 @@ class BoardApi:
     specific sampling points and control parameters. It ensures proper connection
     setup and disconnection when needed.
 
-    :ivar serial_port: The name of the serial port used for communication.
-    :type serial_port: Str
+    :ivar serial_port_name: The name of the serial port used for communication.
+    :type serial_port_name: Str
     """
-    def __init__(self, serial_port):
-        self.serial_port = serial_port
+    def __init__(self, serial_port_name: str):
+        self.serial_port_name = serial_port_name
 
         self.serial_communicator = SerialCommunicator(structs=all_structs.get())
-        self.serial_communicator.set_port_name(self.serial_port)
+        self.serial_communicator.set_port_name(self.serial_port_name)
 
     def get_hardware_info(self) -> HardwareInfo:
         return self.serial_communicator.receive(HardwareInfoStruct).to_base()
@@ -52,6 +56,7 @@ class BoardApi:
             for led_index in sampling_point.led_indices:
                 self.serial_communicator.send(LedInfoStruct(sampling_point.index, led_index))
 
+        # FIXME investigate those sleeps
         time.sleep(0.6)
         self.serial_communicator.send(c_commands.SaveSamplingPointsCommand())
         time.sleep(0.6)
@@ -75,3 +80,32 @@ class BoardApi:
 
     def reboot_in_bootloader_mode(self):
         self.serial_communicator.send(c_commands.RebootInBootloaderModeCommand())
+
+    def upload_firmware(self, firmware_filepath: str):
+        if os.name != "nt":
+            raise NotImplementedError("Firmware upload is only supported on Windows for now")
+
+        if not os.path.isfile(firmware_filepath):
+            raise FileNotFoundError(f"Firmware file not found: {firmware_filepath}")
+
+        previous_drives = windows_drives.list_drives()
+
+        self.reboot_in_bootloader_mode()
+        while self.serial_port_name in SerialCommunicator.get_port_names():
+            continue
+
+        drives = copy(previous_drives)
+        while previous_drives == drives:
+            drives = windows_drives.list_drives()
+
+        for drive in drives:
+            if drive not in previous_drives:
+                try:
+                    is_pico = windows_drives.is_drive_pico(drive)
+                except OSError:
+                    raise OSError(f"Unable to access drive {drive}") from None
+
+                if is_pico:
+                    print(f"Firmware upload candidate: {drive}")
+                    shutil.copy(firmware_filepath, drive)
+                    break

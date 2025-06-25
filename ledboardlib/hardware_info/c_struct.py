@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from pythonarduinoserial.base_c_struct import BaseCStruct
-from pythonarduinoserial.python_extension import without_terminator, bytes_to_string
+from pythonarduinoserial.python_extension import stripped_without_terminator, bytes_to_string
 from pythonarduinoserial.types import *
 
 from ledboardlib.hardware_info.hardware_info import HardwareInfo
@@ -21,7 +21,7 @@ class HardwareInfoStruct(BaseCStruct):
 
     def to_base(self) -> HardwareInfo:
         return HardwareInfo(
-            name=without_terminator(self.name),
+            name=stripped_without_terminator(self.name),
             firmware_id=int(self.firmware_id),
             hardware_id=int(self.hardware_id),
             hardware_serial_number=bytes_to_string(self.hardware_serial_number),
