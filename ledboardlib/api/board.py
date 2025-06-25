@@ -33,9 +33,6 @@ class BoardApi:
         self.serial_communicator = SerialCommunicator(structs=all_structs.get())
         self.serial_communicator.set_port_name(self.serial_port)
 
-    def __del__(self):
-        self.serial_communicator.disconnect()
-
     def get_hardware_info(self) -> HardwareInfo:
         return self.serial_communicator.receive(HardwareInfoStruct).to_base()
 
@@ -74,7 +71,7 @@ class BoardApi:
         self.serial_communicator.send(c_commands.SaveControlParametersCommand())
 
     def reboot(self):
-        self.serial_communicator.send(c_commands)
+        self.serial_communicator.send(c_commands.RebootCommand())
 
     def reboot_in_bootloader_mode(self):
         self.serial_communicator.send(c_commands.RebootInBootloaderModeCommand())
