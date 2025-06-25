@@ -1,6 +1,7 @@
 __all__ = [
     "BeginSamplePointsReceptionCommand",
     "EndSamplePointsReceptionCommand",
+    "RebootCommand",
     "RebootInBootloaderModeCommand",
     "SaveControlParametersCommand",
     "SaveSamplingPointsCommand",
@@ -18,6 +19,11 @@ class BeginSamplePointsReceptionCommand(BaseCStruct):
 
 @dataclass
 class EndSamplePointsReceptionCommand(BaseCStruct):
+    unused: IntegerType() = 0
+
+
+@dataclass
+class RebootCommand(BaseCStruct):
     unused: IntegerType() = 0
 
 

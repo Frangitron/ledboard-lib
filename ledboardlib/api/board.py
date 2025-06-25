@@ -73,5 +73,8 @@ class BoardApi:
     def save_control_parameters(self):
         self.serial_communicator.send(c_commands.SaveControlParametersCommand())
 
+    def reboot(self):
+        self.serial_communicator.send(c_commands)
+
     def reboot_in_bootloader_mode(self):
         self.serial_communicator.send(c_commands.RebootInBootloaderModeCommand())

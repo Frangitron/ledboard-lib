@@ -11,6 +11,7 @@ def get():
     return [
         BeginSamplePointsReceptionCommand,
         EndSamplePointsReceptionCommand,
+        RebootCommand,
         RebootInBootloaderModeCommand,
         SaveControlParametersCommand,
         SaveSamplingPointsCommand,
