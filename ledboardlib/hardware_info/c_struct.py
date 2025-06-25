@@ -12,24 +12,18 @@ class HardwareInfoStruct(BaseCStruct):
 
     name: StringType(8) = "Board"  # 7 char max (includes null terminator, length 8 to avoid manual bytes padding)
 
-    hardware_id: BytesType(8) = BytesDefault(8)
-    hardware_revision: IntegerType() = 0
+    firmware_id: IntegerType() = 0
 
-    firmware_revision: IntegerType() = 0
+    hardware_serial_number: BytesType(8) = BytesDefault(8)
+    hardware_id: IntegerType() = 0
 
-    @staticmethod
-    def from_base(base: HardwareInfo) -> "HardwareInfoStruct":
-        return HardwareInfoStruct(
-            name=base.name,
-            hardware_id=bytes(base.hardware_id, "utf-8"),
-            hardware_revision=base.hardware_revision,
-            firmware_revision=base.firmware_revision
-        )
+    serial_protocol_version: IntegerType() = HardwareInfo.serial_protocol_version
 
     def to_base(self) -> HardwareInfo:
         return HardwareInfo(
             name=without_terminator(self.name),
-            hardware_id=bytes_to_string(self.hardware_id),
-            hardware_revision=int(self.hardware_revision),
-            firmware_revision=int(self.firmware_revision)
+            firmware_id=int(self.firmware_id),
+            hardware_id=int(self.hardware_id),
+            hardware_serial_number=bytes_to_string(self.hardware_serial_number),
+            serial_protocol_version=int(self.serial_protocol_version),
         )

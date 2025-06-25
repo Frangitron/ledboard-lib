@@ -8,13 +8,16 @@ from ledboardlib.serial_communication.c_commands import *
 
 
 def get():
-    return [
-        HardwareInfoStruct,  # Always first to ensure all protocol versions can read it
-    ] + [
-        BeginSamplePointsReceptionCommand,
-        EndSamplePointsReceptionCommand,
+    # Basic operations that all future serial protocol versions must handle
+    protocol_foundation = [
+        HardwareInfoStruct,
         RebootCommand,
         RebootInBootloaderModeCommand,
+    ]
+
+    return protocol_foundation + [
+        BeginSamplePointsReceptionCommand,
+        EndSamplePointsReceptionCommand,
         SaveControlParametersCommand,
         SaveSamplingPointsCommand,
     ] + [
