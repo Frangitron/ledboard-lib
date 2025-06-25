@@ -1,3 +1,4 @@
+from ledboardlib import exceptions
 from ledboardlib.api.board import BoardApi
 from ledboardlib.api.board_detection import BoardDetectionApi
 from ledboardlib.color_format import ColorFormat
@@ -7,4 +8,3 @@ from ledboardlib.hardware_configuration.hardware_configuration import HardwareCo
 from ledboardlib.hardware_info.hardware_info import HardwareInfo
 from ledboardlib.listed_board import ListedBoard
 from ledboardlib.sampling_point.sampling_point import SamplingPoint
-from pythonarduinoserial.usbserial.exception import UsbSerialException
