@@ -9,6 +9,8 @@ from ledboardlib.serial_communication.c_commands import *
 
 def get():
     return [
+        HardwareInfoStruct,  # Always first to ensure all protocol versions can read it
+    ] + [
         BeginSamplePointsReceptionCommand,
         EndSamplePointsReceptionCommand,
         RebootCommand,
@@ -18,7 +20,6 @@ def get():
     ] + [
         ControlParametersStruct,
         HardwareConfigurationStruct,
-        HardwareInfoStruct,
         LedInfoStruct,
         SamplePointStruct,
     ]
