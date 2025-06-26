@@ -1,3 +1,4 @@
+import pywintypes
 import win32api
 
 
@@ -6,4 +7,7 @@ def list_drives() -> list[str]:
 
 
 def is_drive_pico(drive: str) -> bool:
-    return win32api.GetVolumeInformation(drive)[0] == 'RPI-RP2'
+    try:
+        return win32api.GetVolumeInformation(drive)[0] == 'RPI-RP2'
+    except pywintypes.error as e:
+        raise OSError(e)
