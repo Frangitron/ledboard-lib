@@ -41,32 +41,26 @@ def waveshare_10x16(port: str):
     board.set_sampling_points(make_wave_share_points())
 
 
-def strip_5m(port: str):
+def strip_5m(port: str, led_count: int = 300):
+
     board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
-    configuration.led_count = 300
+    configuration.name = "Strip"
+    configuration.gpio_button_a = 2
+    configuration.gpio_button_b = 3
+    configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
+    configuration.led_color_format = ColorFormat.GRB
+    configuration.led_count = led_count
     board.set_configuration(configuration)
 
     print(configuration)
 
     sampling_points = list()
-    for s in range(150):
+    for s in range(led_count):
         new = SamplingPoint(
             index=s,
-            x=int((150 - s) * 1.2),
+            x=s,
             y=0,
-            universe_number=0,
-            universe_channel=s * 3,
-            color_format=ColorFormat.RGB,
-            led_indices=[s]
-        )
-        sampling_points.append(new)
-
-    for s in range(150, 300):
-        new = SamplingPoint(
-            index=s,
-            x=(s - 150),
-            y=10,
             universe_number=0,
             universe_channel=s * 3,
             color_format=ColorFormat.RGB,
@@ -175,11 +169,11 @@ def blue_pipes(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM5"
-    # print_info(com)
+    com = "COM8"
+    print_info(com)
     # waveshare_10x16(com)
-    # strip_5m(com)
+    strip_5m(com, 40)
     # rect_256(com)
     # set_speed_z(com, 1)
-    blue_pipes(com)
+    #blue_pipes(com)
     print("Done.")
