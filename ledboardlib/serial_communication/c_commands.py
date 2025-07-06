@@ -8,35 +8,35 @@ __all__ = [
 ]
 from dataclasses import dataclass
 
-from pythonarduinoserial.base_c_struct import BaseCStruct
+from pythonhelpers.dataclass_annotate import DataclassToFromBaseMixin
 from pythonarduinoserial.types import IntegerType
 
 
 @dataclass
-class BeginSamplePointsReceptionCommand(BaseCStruct):
+class BeginSamplePointsReceptionCommand(DataclassToFromBaseMixin):
     count: IntegerType() = 0
 
 
 @dataclass
-class EndSamplePointsReceptionCommand(BaseCStruct):
+class EndSamplePointsReceptionCommand(DataclassToFromBaseMixin):
     unused: IntegerType() = 0
 
 
 @dataclass
-class RebootCommand(BaseCStruct):
+class RebootCommand(DataclassToFromBaseMixin):
     unused: IntegerType() = 0
 
 
 @dataclass
-class RebootInBootloaderModeCommand(BaseCStruct):
+class RebootInBootloaderModeCommand(DataclassToFromBaseMixin):
     unused: IntegerType() = 0
 
 
 @dataclass
-class SaveControlParametersCommand(BaseCStruct):
+class SaveControlParametersCommand(DataclassToFromBaseMixin):
     unused: IntegerType() = 0  # FIXME
 
 
 @dataclass
-class SaveSamplingPointsCommand(BaseCStruct):
+class SaveSamplingPointsCommand(DataclassToFromBaseMixin):
     unused: IntegerType() = 0  # FIXME

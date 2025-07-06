@@ -1,17 +1,16 @@
 from dataclasses import dataclass
 from ipaddress import IPv4Address
 
-from pythonarduinoserial.base_c_struct import BaseCStruct
 from pythonarduinoserial.python_extension import stripped_without_terminator
 from pythonarduinoserial.types import *
-from pythonhelpers.dataclass_annotate_metaclass import DataclassAnnotateMetaclass
+from pythonhelpers.dataclass_annotate import DataclassAnnotateMixin
 
 from ledboardlib.color_format import ColorFormat
 from ledboardlib.hardware_configuration.hardware_configuration import HardwareConfiguration
 
 
 @dataclass
-class HardwareConfigurationStruct(HardwareConfiguration, BaseCStruct, metaclass=DataclassAnnotateMetaclass):
+class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin):
     """
     Data transfer object between Python and Arduino
     """

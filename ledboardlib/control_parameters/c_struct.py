@@ -1,13 +1,14 @@
 from dataclasses import dataclass
 
-from pythonarduinoserial.base_c_struct import BaseCStruct
 from pythonarduinoserial.types import *
+
+from pythonhelpers.dataclass_annotate import DataclassAnnotateMixin
 
 from ledboardlib.control_parameters.control_parameters import ControlParameters
 
 
 @dataclass
-class ControlParametersStruct(BaseCStruct):
+class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     """
     Data transfer object between Python and Arduino
     """

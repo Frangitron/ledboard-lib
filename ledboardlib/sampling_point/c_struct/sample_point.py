@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 
-from pythonarduinoserial.base_c_struct import BaseCStruct
+from pythonhelpers.dataclass_annotate import DataclassToFromBaseMixin
 from pythonarduinoserial.types import *
 
 from ledboardlib.sampling_point.sampling_point import SamplingPoint
 
 
 @dataclass
-class SamplePointStruct(BaseCStruct):
+class SamplePointStruct(DataclassToFromBaseMixin):
     index: IntegerType() = 0
     x: IntegerType() = 0
     y: IntegerType() = 0
