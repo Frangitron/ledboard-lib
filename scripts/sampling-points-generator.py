@@ -32,7 +32,7 @@ def waveshare_10x16(port: str):
     configuration.gpio_button_a = 2
     configuration.gpio_button_b = 3
     configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
-    configuration.led_color_format = ColorFormat.RGB.value
+    configuration.led_color_format = ColorFormat.RGB
     configuration.led_count = 160
     board.set_configuration(configuration)
 
@@ -169,10 +169,10 @@ def blue_pipes(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM8"
+    com = "COM7"
     print_info(com)
-    # waveshare_10x16(com)
-    strip_5m(com, 40)
+    waveshare_10x16(com)
+    #strip_5m(com, 40)
     # rect_256(com)
     # set_speed_z(com, 1)
     #blue_pipes(com)
