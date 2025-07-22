@@ -192,8 +192,8 @@ def costume_val(port: str):
     board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
     configuration.led_count = 512
-    configuration.gpio_button_a = 2
-    configuration.gpio_button_b = 3
+    configuration.gpio_button_a = 3
+    configuration.gpio_button_b = 2
     configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
     configuration.led_color_format = ColorFormat.GRB
     board.set_configuration(configuration)
