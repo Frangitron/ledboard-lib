@@ -1,12 +1,12 @@
 """
 LEGACY code waiting for JSON files
 """
-import time
 
 from ledboardlib import BoardApi, SamplingPoint, GpioEnum, ColorFormat
 
 
-def make_wave_share_points(index=0):
+def make_wave_share_points():
+    index = 0
     sampling_points = list()
 
     for y in range(10):
@@ -167,134 +167,46 @@ def blue_pipes(port: str):
     board.set_sampling_points(sampling_points)
 
 
-def make_rect_points(index=0):
-    sampling_points = list()
+def melinerion(port: str):
+    strand_led_count = 150
+    strand_count = 1
+    pixel_doubling = 1
 
-    for y in range(16):
-        x_ = (lambda X: X) if y % 2 else (lambda X: 15 - X)
-        for x in range(16):
+    board = BoardApi(serial_port_name=port)
+    configuration = board.get_configuration()
+    configuration.name = "Meliner"
+    configuration.led_color_format = ColorFormat.RGBW
+    configuration.led_count = strand_led_count
+    board.set_configuration(configuration)
+
+    print(configuration)
+
+    sampling_points = list()
+    for r in range(strand_count):
+        for s in range(int(strand_led_count / pixel_doubling)):
+            index = (r * int(strand_led_count / pixel_doubling)) + s
             new = SamplingPoint(
                 index=index,
-                x=x_(x),
-                y=y,
+                x=s * pixel_doubling,
+                y=r,
                 universe_number=0,
                 universe_channel=index * 3,
-                color_format=ColorFormat.RGB,
-                led_indices=[index]
+                color_format=ColorFormat.GRB,
+                led_indices=[index * pixel_doubling + i for i in range(pixel_doubling)]
             )
             sampling_points.append(new)
-            index += 1
-
-    return sampling_points
-
-
-def costume_val(port: str):
-    board = BoardApi(serial_port_name=port)
-    configuration = board.get_configuration()
-    configuration.led_count = 512
-    configuration.gpio_button_a = 3
-    configuration.gpio_button_b = 2
-    configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
-    configuration.led_color_format = ColorFormat.GRB
-    board.set_configuration(configuration)
-
-    sampling_points = list()
-    index = len(sampling_points)
-
-    sampling_points += make_wave_share_points(index)
-    index = len(sampling_points)
-
-    sampling_points += make_rect_points(index)
-    index = len(sampling_points)
-
-    sampling_points.append(SamplingPoint(
-        index=index,
-        x=0,
-        y=0,
-        universe_number=0,
-        universe_channel=index * 3,
-        color_format=ColorFormat.RGB,
-        led_indices=[index]
-    ))
-    index = len(sampling_points)
-
-    for s in range(47):
-        sampling_points.append(SamplingPoint(
-            index=index,
-            x=s,
-            y=-2,
-            universe_number=0,
-            universe_channel=index * 3,
-            color_format=ColorFormat.RGB,
-            led_indices=[index]
-        ))
-        index += 1
-
-    for s in range(48):
-        sampling_points.append(SamplingPoint(
-            index=index,
-            x=47-s,
-            y=2,
-            universe_number=0,
-            universe_channel=index * 3,
-            color_format=ColorFormat.RGB,
-            led_indices=[index]
-        ))
-        index += 1
-
 
     print(f"Sampling points: {len(sampling_points)}")
     board.set_sampling_points(sampling_points)
-
-
-def costume_guigui(port: str):
-    board = BoardApi(serial_port_name=port)
-    configuration = board.get_configuration()
-    configuration.led_count = 270
-    configuration.gpio_button_a = 3
-    configuration.gpio_button_b = 2
-    configuration.gpio_led_first = GpioEnum.LedsWaveshareHat.value
-    configuration.led_color_format = ColorFormat.GRB
-    board.set_configuration(configuration)
-
-    sampling_points = list()
-    index = len(sampling_points)
-
-    sampling_points += make_wave_share_points(index)
-    index = len(sampling_points)
-
-    for s in range(110):
-        sampling_points.append(SamplingPoint(
-            index=index,
-            x=s,
-            y=-2,
-            universe_number=0,
-            universe_channel=index * 3,
-            color_format=ColorFormat.RGB,
-            led_indices=[index]
-        ))
-        index += 1
-
-    print(f"Sampling points: {len(sampling_points)}")
-    board.set_sampling_points(sampling_points)
-
-
-def reboot(port: str):
-    board = BoardApi(serial_port_name=port)
-    board.reboot()
-    print("Rebooting...")
 
 
 if __name__ == '__main__':
-    com = "COM11"
+    com = "COM4"
     print_info(com)
     # waveshare_10x16(com)
-    #strip_5m(com, 40)
+    # strip_5m(com, 40)
     # rect_256(com)
     # set_speed_z(com, 1)
-    #blue_pipes(com)
-    #costume_val(com)  # COM9
-    costume_guigui(com)  # COM11
-    time.sleep(1)
-    reboot(com)
+    # blue_pipes(com)
+    melinerion(com)
     print("Done.")
