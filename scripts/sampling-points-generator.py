@@ -168,14 +168,14 @@ def blue_pipes(port: str):
 
 
 def melinerion(port: str):
-    strand_led_count = 300
+    strand_led_count = 30
     strand_count = 2
     pixel_doubling = 1
 
     board = BoardApi(serial_port_name=port)
     configuration = board.get_configuration()
     configuration.name = "Meliner"
-    configuration.led_color_format = ColorFormat.RGBW
+    configuration.led_color_format = ColorFormat.GRBW
     configuration.led_count = strand_led_count
     board.set_configuration(configuration)
 
