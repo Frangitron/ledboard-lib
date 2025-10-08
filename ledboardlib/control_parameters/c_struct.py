@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
 from pythonarduinoserial.types import *
-
 from pythonhelpers.dataclass_annotate import DataclassAnnotateMixin
 
+from ledboardlib.color_mode import ColorMode
 from ledboardlib.control_parameters.control_parameters import ControlParameters
 
 
@@ -26,9 +26,19 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     noise_min: IntegerType() = 150
     noise_max: IntegerType() = 1024 - 200
 
+    color_mode: IntegerType() = 0
+
+    noise_h: IntegerType() = 0
+    noise_s: IntegerType() = 0
+    noise_l: IntegerType() = 0
+
     noise_r: IntegerType() = 0
     noise_g: IntegerType() = 200
     noise_b: IntegerType() = 200
+
+    runner_h: IntegerType() = 0
+    runner_s: IntegerType() = 0
+    runner_l: IntegerType() = 0
 
     runner_r: IntegerType() = 255
     runner_g: IntegerType() = 0
@@ -59,9 +69,16 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             noise_speed_z=base.noise_speed_z,
             noise_min=base.noise_min,
             noise_max=base.noise_max,
+            color_mode=base.color_mode.value,
+            noise_h=base.noise_h,
+            noise_s=base.noise_s,
+            noise_l=base.noise_l,
             noise_r=base.noise_r,
             noise_g=base.noise_g,
             noise_b=base.noise_b,
+            runner_h=base.runner_h,
+            runner_s=base.runner_s,
+            runner_l=base.runner_l,
             runner_r=base.runner_r,
             runner_g=base.runner_g,
             runner_b=base.runner_b,
@@ -87,9 +104,16 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             noise_speed_z=int(self.noise_speed_z),
             noise_min=int(self.noise_min),
             noise_max=int(self.noise_max),
+            color_mode=ColorMode(self.color_mode),
+            noise_h=int(self.noise_h),
+            noise_s=int(self.noise_s),
+            noise_l=int(self.noise_l),
             noise_r=int(self.noise_r),
             noise_g=int(self.noise_g),
             noise_b=int(self.noise_b),
+            runner_h=int(self.runner_h),
+            runner_s=int(self.runner_s),
+            runner_l=int(self.runner_l),
             runner_r=int(self.runner_r),
             runner_g=int(self.runner_g),
             runner_b=int(self.runner_b),

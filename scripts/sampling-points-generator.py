@@ -168,8 +168,9 @@ def blue_pipes(port: str):
 
 
 def melinerion(port: str):
-    strand_led_count = 30
-    strand_count = 2
+    strand_led_count = 150
+
+    strand_count = 1
     pixel_doubling = 1
 
     board = BoardApi(serial_port_name=port)

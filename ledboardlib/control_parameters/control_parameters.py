@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from ledboardlib.color_mode import ColorMode
+
 
 @dataclass
 class ControlParameters:
@@ -16,9 +18,19 @@ class ControlParameters:
     noise_min: int
     noise_max: int
 
+    color_mode: ColorMode
+
+    noise_h: int
+    noise_s: int
+    noise_l: int
+
     noise_r: int
     noise_g: int
     noise_b: int
+
+    runner_h: int
+    runner_s: int
+    runner_l: int
 
     runner_r: int
     runner_g: int
