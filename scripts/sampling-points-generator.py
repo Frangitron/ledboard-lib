@@ -168,7 +168,7 @@ def blue_pipes(port: str):
 
 
 def melinerion(port: str):
-    strand_led_count = 150
+    strand_led_count = 600
 
     strand_count = 1
     pixel_doubling = 1
@@ -178,6 +178,8 @@ def melinerion(port: str):
     configuration.name = "Meliner"
     configuration.led_color_format = ColorFormat.GRBW
     configuration.led_count = strand_led_count
+    configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
+    configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
     board.set_configuration(configuration)
 
     print(configuration)
@@ -202,7 +204,7 @@ def melinerion(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM4"
+    com = "COM5"
     print_info(com)
     # waveshare_10x16(com)
     # strip_5m(com, 40)

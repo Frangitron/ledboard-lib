@@ -29,7 +29,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
 
     noise_h: IntegerType() = 0
     noise_s: IntegerType() = 0
-    noise_l: IntegerType() = 0
+    noise_l: IntegerType() = 128
 
     noise_r: IntegerType() = 0
     noise_g: IntegerType() = 200
@@ -37,7 +37,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
 
     runner_h: IntegerType() = 0
     runner_s: IntegerType() = 0
-    runner_l: IntegerType() = 0
+    runner_l: IntegerType() = 128
 
     runner_r: IntegerType() = 255
     runner_g: IntegerType() = 0

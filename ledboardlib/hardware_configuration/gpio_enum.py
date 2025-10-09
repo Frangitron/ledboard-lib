@@ -7,3 +7,4 @@ class GpioEnum(Enum):
     LedsAllanBoard = 6
     ButtonBluePipesA = 9
     ButtonBluePipesB = 10
+    DmxNoonBoard = 11
