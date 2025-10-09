@@ -46,5 +46,4 @@ class ControlParameters:
     mask_y1: int
     mask_y2: int
 
-    bat_low: bool
-    bat_1_bar: bool
+    shutter: int

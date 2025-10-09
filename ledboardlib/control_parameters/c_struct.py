@@ -12,7 +12,6 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     """
     Data transfer object between Python and Arduino
     """
-
     noise_octaves: IntegerType() = 2
     noise_scale: IntegerType() = 3
 
@@ -54,8 +53,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     mask_y1: IntegerType() = 0
     mask_y2: IntegerType() = 0
 
-    bat_low: IntegerType() = 0
-    bat_1_bar: IntegerType() = 0
+    shutter: IntegerType() = 0
 
     @staticmethod
     def from_base(base: ControlParameters) -> "ControlParametersStruct":
@@ -89,8 +87,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_x2=base.mask_x2,
             mask_y1=base.mask_y1,
             mask_y2=base.mask_y2,
-            bat_low=int(base.bat_low),
-            bat_1_bar=int(base.bat_1_bar)
+            shutter=base.shutter
         )
 
     def to_base(self) -> ControlParameters:
@@ -124,6 +121,5 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_x2=int(self.mask_x2),
             mask_y1=int(self.mask_y1),
             mask_y2=int(self.mask_y2),
-            bat_low=bool(self.bat_low),
-            bat_1_bar=bool(self.bat_1_bar)
+            shutter=int(self.shutter)
         )
