@@ -6,7 +6,7 @@ from ledboardlib.scan.detector_options import DetectorOptions
 from ledboardlib.scan.frame_detection_result import FrameDetectionResult
 
 
-def run_detection_in_process(result_queue: "Queue[FrameDetectionResult]", command_queue: "Queue[str]", options: DetectorOptions):
+def run_detection_in_process(command_queue: "Queue[str]", result_queue: "Queue[FrameDetectionResult]", options_queue: "Queue[DetectorOptions]", options: DetectorOptions):
     """
     Ensures communication with the parent process when executed in a separate process.
     """
@@ -21,6 +21,10 @@ def run_detection_in_process(result_queue: "Queue[FrameDetectionResult]", comman
                 print(f"Received command: {command}")
                 if command == "stop":
                     break
+
+            if not options_queue.empty():
+                options = options_queue.get(block=False)
+                detector.set_options(options)
 
             result = detector.step()
             try:
