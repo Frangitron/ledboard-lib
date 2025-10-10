@@ -55,6 +55,9 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
 
     shutter: IntegerType() = 0
 
+    # -1 means normal behavior, [0-32 767] illuminates LED at the given index
+    single_led: IntegerType() = -1
+
     @staticmethod
     def from_base(base: ControlParameters) -> "ControlParametersStruct":
         return ControlParametersStruct(
@@ -87,7 +90,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_x2=base.mask_x2,
             mask_y1=base.mask_y1,
             mask_y2=base.mask_y2,
-            shutter=base.shutter
+            shutter=base.shutter,
+            single_led=base.single_led
         )
 
     def to_base(self) -> ControlParameters:
@@ -121,5 +125,6 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_x2=int(self.mask_x2),
             mask_y1=int(self.mask_y1),
             mask_y2=int(self.mask_y2),
-            shutter=int(self.shutter)
+            shutter=int(self.shutter),
+            single_led=int(self.single_led)
         )

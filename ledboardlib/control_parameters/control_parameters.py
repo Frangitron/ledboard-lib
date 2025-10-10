@@ -47,3 +47,5 @@ class ControlParameters:
     mask_y2: int
 
     shutter: int
+
+    single_led: int
