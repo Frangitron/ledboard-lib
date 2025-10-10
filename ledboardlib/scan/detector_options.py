@@ -3,10 +3,11 @@ from dataclasses import dataclass
 
 @dataclass
 class DetectorOptions:
+    blur_radius: int
+    brightness_threshold: int
+    camera_height: int
     camera_index: int
     camera_width: int
-    camera_height: int
-    brightness_threshold: int
 
     def __post_init__(self):
         if self.camera_index < 0:
@@ -17,3 +18,5 @@ class DetectorOptions:
             raise ValueError("Camera height must be positive")
         if self.brightness_threshold < 0 or self.brightness_threshold > 255:
             raise ValueError("Brightness threshold must be within 0-255 range")
+        if self.blur_radius < 0:
+            raise ValueError("Blur radius must be non-negative")

@@ -1,5 +1,4 @@
 import time
-from typing import Tuple
 
 import cv2
 import numpy as np
@@ -13,6 +12,7 @@ class Detector:
     def __init__(self, options: DetectorOptions):
         self._options = options
         self._video_capture: cv2.VideoCapture | None = None
+        self._frame: np.ndarray | None = None
 
     def begin(self):
         print("Opening camera...")
@@ -30,24 +30,16 @@ class Detector:
         if self._video_capture is None:
             raise RuntimeError("Detector not started (use begin() first)")
 
+        self._capture_frame()
+        self._apply_blur()
+        brightest_point = self._find_brightest_point()
 
-        # Capture frame
-        ret, frame = self._video_capture.read()
-        if not ret:
-            raise NoFrameCaptured("Failed to capture frame")
-
-        # Find brightest pixels
-        brightest_points = self._find_brightest_points(
-            frame, 1, self._options.brightness_threshold
-        )
-
-        # Prepare result data
         return FrameDetectionResult(
-            timestamp=time.time(),
-            frame_width=self._options.camera_width,
+            frame_as_bytes=cv2.imencode('.jpg', self._frame, [cv2.IMWRITE_JPEG_QUALITY, 85])[1].tobytes(),
             frame_height=self._options.camera_height,
-            frame_as_bytes=cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 85])[1].tobytes(),
-            points=brightest_points
+            frame_width=self._options.camera_width,
+            point=brightest_point,
+            timestamp=time.time(),
         )
 
     def end(self):
@@ -57,35 +49,24 @@ class Detector:
             self._video_capture = None
             print("Camera closed successfully")
 
-    def _find_brightest_points(self, image: np.ndarray, num_pixels: int = 10, threshold: int = 200) -> list[Tuple[int, int]]:
-        """
-        Find the brightest pixels in the image.
+    def _apply_blur(self):
+        if self._options.blur_radius > 0:
+            self._frame = cv2.GaussianBlur(self._frame, (self._options.blur_radius, self._options.blur_radius), 0)
 
-        Args:
-            image: Input image (BGR format)
-            num_pixels: Number of brightest pixels to return
-            threshold: Minimum brightness threshold
+    def _capture_frame(self):
+        ret, self._frame = self._video_capture.read()
+        if not ret:
+            raise NoFrameCaptured("Failed to capture frame")
 
-        Returns:
-            List of (x, y) coordinates of brightest pixels
-        """
-        # Convert to grayscale for brightness calculation
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        # Find pixels above the given threshold
-        bright_mask = gray >= threshold
+    def _find_brightest_point(self) -> tuple[int, int] | None:
+        gray = cv2.cvtColor(self._frame, cv2.COLOR_BGR2GRAY)
+        bright_mask = gray >= self._options.brightness_threshold
 
         if not np.any(bright_mask):
-            return []
+            return None
 
-        # Get coordinates of bright pixels
         y_coords, x_coords = np.where(bright_mask)
         bright_values = gray[bright_mask]
+        top_index = np.argsort(bright_values)[::-1][1]
 
-        # Sort by brightness and get top N pixels
-        sorted_indices = np.argsort(bright_values)[::-1]
-        top_indices = sorted_indices[:min(num_pixels, len(sorted_indices))]
-
-        # Return as a list of (x, y) tuples
-        brightest_points = [(int(x_coords[i]), int(y_coords[i])) for i in top_indices]
-        return brightest_points
+        return int(x_coords[top_index]), int(y_coords[top_index])

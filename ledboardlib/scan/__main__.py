@@ -7,10 +7,11 @@ from ledboardlib.scan.detector_options import DetectorOptions
 
 
 detector = DetectionExecutor(options=DetectorOptions(
+    blur_radius=15,
+    brightness_threshold=200,
+    camera_height=480,
     camera_index=0,
     camera_width=640,
-    camera_height=480,
-    brightness_threshold=200,
 ))
 
 
@@ -26,8 +27,8 @@ def main():
             result = detector.get_latest_result()
             if result is not None:
                 image = decode_image(result.frame_as_bytes)
-                for x, y in result.points:
-                    cv2.circle(image, (x, y), 5, (0, 255, 0), 2)
+                if result.point is not None:
+                    cv2.circle(image, (result.point[0], result.point[1]), 5, (0, 255, 0), 2)
 
                 cv2.imshow("Brightest Pixels Scanner", image)
                 key = cv2.waitKey(1) & 0xFF

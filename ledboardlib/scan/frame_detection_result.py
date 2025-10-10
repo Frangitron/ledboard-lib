@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 @dataclass
 class FrameDetectionResult:
-    timestamp: float
-    frame_width: int
-    frame_height: int
     frame_as_bytes: bytes
-    points: list[tuple[int, int]]
+    frame_height: int
+    frame_width: int
+    point: tuple[int, int] | None
+    timestamp: float
