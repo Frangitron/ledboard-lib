@@ -10,11 +10,11 @@ class DetectionExecutor:
     """
     Executes DetectorProcessingWrapper in a separate process.
     """
-    def __init__(self, options: DetectorOptions, max_queue_size: int = 10):
+    def __init__(self, options: DetectorOptions):
         self.options = options
 
-        self.result_queue = Queue(maxsize=max_queue_size)
-        self.command_queue = Queue()
+        self.result_queue = Queue(maxsize=1)
+        self.command_queue = Queue(maxsize=1)  # FIXME use Event
 
         self._process: Process | None = None
         self._is_running = False
