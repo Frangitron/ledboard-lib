@@ -1,3 +1,4 @@
+import queue
 from multiprocessing import Queue
 
 from ledboardlib.scan.detector import Detector
@@ -16,15 +17,19 @@ def run_detection_in_process(result_queue: "Queue[FrameDetectionResult]", comman
         try:
             # FIXME find out why not working on exit (maybe KeyboardInterrupt is propagated down?)
             if not command_queue.empty():
-                command = command_queue.get()
+                command = command_queue.get(block=False)
                 print(f"Received command: {command}")
                 if command == "stop":
                     break
 
             result = detector.step()
-            result_queue.put(result)
+            try:
+                result_queue.put(result, block=False)
+            except queue.Full:
+                pass
 
         except KeyboardInterrupt:
             break
 
     detector.end()
+    print("Detection execution in process ended")

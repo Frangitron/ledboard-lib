@@ -1,3 +1,4 @@
+import time
 from multiprocessing import Process, Queue
 
 from ledboardlib.scan.detector_options import DetectorOptions
@@ -24,6 +25,7 @@ class DetectionExecutor:
             return False
 
         print("Starting detector process...")
+        self._drain_queues()
         self._process = Process(
             target=run_detection_in_process,
             args=(self.result_queue, self.command_queue, self.options)
@@ -40,14 +42,15 @@ class DetectionExecutor:
 
         print("Stopping detector process...")
         if self._process.is_alive():
-            self.command_queue.put("stop")
-            self._process.join(timeout=1)
+            self.command_queue.put("stop", block=False)
+            self._process.join(timeout=0.5)
             if self._process.is_alive():
-                print("Force terminating detector process...")
+                print("/!\ Force terminating detector process...")
                 self._process.terminate()
 
         print("Scanner process stopped")
         self._is_running = False
+        self._process = None
 
         return True
 
@@ -61,6 +64,8 @@ class DetectionExecutor:
         # TODO sure this is the best way to handle this?
         if self._process is None or not self._process.is_alive():
             self._is_running = False
+            if self._process is not None and not self._is_running:
+                self._drain_queues()
 
         if not self.result_queue.empty():
             try:
@@ -73,3 +78,22 @@ class DetectionExecutor:
     @property
     def is_running(self) -> bool:
         return self._is_running
+
+    def _drain_queues(self):
+        """Drain all remaining items from queues to prevent process hanging."""
+        self._drain_result_queue()
+        self._drain_command_queue()
+
+    def _drain_result_queue(self):
+        while not self.result_queue.empty():
+            try:
+                self.result_queue.get_nowait()
+            except Exception:
+                break
+
+    def _drain_command_queue(self):
+        while not self.command_queue.empty():
+            try:
+                self.command_queue.get_nowait()
+            except Exception:
+                break
