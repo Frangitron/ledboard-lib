@@ -14,6 +14,9 @@ class Detector:
         self._video_capture: cv2.VideoCapture | None = None
         self._frame: np.ndarray | None = None
 
+    def set_options(self, options: DetectorOptions):
+        self._options = options
+
     def begin(self):
         print("Opening camera...")
 
@@ -30,9 +33,13 @@ class Detector:
         if self._video_capture is None:
             raise RuntimeError("Detector not started (use begin() first)")
 
-        self._capture_frame()
-        self._apply_blur()
-        brightest_point = self._find_brightest_point()
+        points = [self._detect() for _ in range(self._options.average_frame_count)]
+        points = [point for point in points if point is not None]  # FIXME doesnt respect average frame count if None
+        if points:
+            x_coords, y_coords = zip(*points)
+            brightest_point = (sum(x_coords) / len(x_coords), sum(y_coords) / len(y_coords))
+        else:
+            brightest_point = None
 
         return FrameDetectionResult(
             frame_as_bytes=cv2.imencode('.jpg', self._frame, [cv2.IMWRITE_JPEG_QUALITY, 85])[1].tobytes(),
@@ -51,7 +58,8 @@ class Detector:
 
     def _apply_blur(self):
         if self._options.blur_radius > 0:
-            self._frame = cv2.GaussianBlur(self._frame, (self._options.blur_radius, self._options.blur_radius), 0)
+            radius = self._options.blur_radius * 2 + 1
+            self._frame = cv2.GaussianBlur(self._frame, (radius, radius), 0)
 
     def _capture_frame(self):
         ret, self._frame = self._video_capture.read()
@@ -60,16 +68,10 @@ class Detector:
 
     def _find_brightest_point(self) -> tuple[int, int] | None:
         gray = cv2.cvtColor(self._frame, cv2.COLOR_BGR2GRAY)
-        bright_mask = gray >= self._options.brightness_threshold
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(gray)
+        return max_loc[0], max_loc[1]
 
-        if not np.any(bright_mask):
-            return None
-
-        y_coords, x_coords = np.where(bright_mask)
-        bright_values = gray[bright_mask]
-        if not bright_values.size:
-            return None
-
-        top_index = np.argsort(bright_values)[::-1][1]
-
-        return int(x_coords[top_index]), int(y_coords[top_index])
+    def _detect(self) -> tuple[int, int]:
+        self._capture_frame()
+        self._apply_blur()
+        return self._find_brightest_point()
