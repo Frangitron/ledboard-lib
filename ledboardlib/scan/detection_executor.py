@@ -18,10 +18,10 @@ class DetectionExecutor:
         self._process: Process | None = None
         self._is_running = False
 
-    def start(self):
+    def start(self) -> bool:
         if self._process or self._is_running:
             print("Detector process already running")
-            return
+            return False
 
         print("Starting detector process...")
         self._process = Process(
@@ -31,10 +31,12 @@ class DetectionExecutor:
         self._process.start()
         self._is_running = True
 
-    def stop(self):
+        return True
+
+    def stop(self) -> bool:
         if not (self._process and self._is_running):
             print("Detector process not running")
-            return
+            return False
 
         print("Stopping detector process...")
         if self._process.is_alive():
@@ -47,13 +49,19 @@ class DetectionExecutor:
         print("Scanner process stopped")
         self._is_running = False
 
+        return True
+
     def get_latest_result(self) -> FrameDetectionResult | None:
         """
         Get the latest scan result from the child process.
 
         Returns:
-            FrameDetectionResult containing brightest points and image data, or None if no data available
+            FrameDetectionResult containing the brightest point and image data, or None if no data available
         """
+        # TODO sure this is the best way to handle this?
+        if self._process is None or not self._process.is_alive():
+            self._is_running = False
+
         if not self.result_queue.empty():
             try:
                 return self.result_queue.get(block=False)

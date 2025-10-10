@@ -49,3 +49,4 @@ class ControlParameters:
     shutter: int
 
     single_led: int
+    single_led_brightness: int

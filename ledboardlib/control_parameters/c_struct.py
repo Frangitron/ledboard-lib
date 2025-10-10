@@ -57,6 +57,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
 
     # -1 means normal behavior, [0-32 767] illuminates LED at the given index
     single_led: IntegerType() = -1
+    single_led_brightness: IntegerType() = 128
 
     @staticmethod
     def from_base(base: ControlParameters) -> "ControlParametersStruct":
@@ -91,7 +92,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_y1=base.mask_y1,
             mask_y2=base.mask_y2,
             shutter=base.shutter,
-            single_led=base.single_led
+            single_led=base.single_led,
+            single_led_brightness=base.single_led_brightness
         )
 
     def to_base(self) -> ControlParameters:
@@ -126,5 +128,6 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_y1=int(self.mask_y1),
             mask_y2=int(self.mask_y2),
             shutter=int(self.shutter),
-            single_led=int(self.single_led)
+            single_led=int(self.single_led),
+            single_led_brightness=int(self.single_led_brightness)
         )

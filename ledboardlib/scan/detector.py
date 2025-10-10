@@ -67,6 +67,9 @@ class Detector:
 
         y_coords, x_coords = np.where(bright_mask)
         bright_values = gray[bright_mask]
+        if not bright_values.size:
+            return None
+
         top_index = np.argsort(bright_values)[::-1][1]
 
         return int(x_coords[top_index]), int(y_coords[top_index])
