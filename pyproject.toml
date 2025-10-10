@@ -1,9 +1,11 @@
 [build-system]
 requires = [
-    "setuptools>=46.0",
-    "pywin32",
     "jinja2",
-    "pythonarduinoserial@git+https://github.com/Frangitron/python-arduino-serial@main"
+    "numpy",
+    "opencv-python",
+    "pythonarduinoserial@git+https://github.com/Frangitron/python-arduino-serial@main",
+    "pywin32",
+    "setuptools>=46.0",
 ]
 build-backend = "setuptools.build_meta"
 
