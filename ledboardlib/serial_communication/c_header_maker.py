@@ -4,7 +4,7 @@ from typing import Any
 
 import sys
 
-from pythonarduinoserial.c_header_exporter import CHeaderExporter
+from pythonarduinoserial.c_header_exporter import CHeaderExporter, read_protocol_version_from_header
 
 from ledboardlib.serial_communication import all_structs
 
@@ -12,10 +12,14 @@ from ledboardlib.serial_communication import all_structs
 def make_c_header(structs: list[Any], filepath: str, display: bool):
     print("Generating C Header...")
 
+    new_protocol_version = read_protocol_version_from_header(filepath) + 1
+    print(f"New protocol version: {new_protocol_version}")
+
     c_header_exporter = CHeaderExporter(
         struct_types=structs,
         namespace="Frangitron",
-        include_guard_name="PLATFORMIO_SERIALPROTOCOL_H"
+        include_guard_name="PLATFORMIO_SERIALPROTOCOL_H",
+        protocol_version=new_protocol_version
     )
 
     content = c_header_exporter.export()

@@ -29,5 +29,5 @@ class HardwareInfo:
     hardware_id: int
     hardware_serial_number: str
 
-    # Increment this on C struct changes
-    serial_protocol_version: int = 0
+    # Auto-incremented in C Struct by CHeaderMaker (=protocolVersion)
+    serial_protocol_version: int

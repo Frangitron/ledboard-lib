@@ -18,7 +18,7 @@ class HardwareInfoStruct(HardwareInfo, DataclassAnnotateMixin):
     hardware_id: IntegerType() = 0
     hardware_serial_number: BytesType(8) = BytesDefault(8)
 
-    serial_protocol_version: IntegerType() = HardwareInfo.serial_protocol_version
+    serial_protocol_version: IntegerType(raw_value="protocolVersion") = 0
 
     def to_base(self) -> HardwareInfo:
         return HardwareInfo(
