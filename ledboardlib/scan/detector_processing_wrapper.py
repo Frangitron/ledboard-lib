@@ -26,7 +26,16 @@ def run_detection_in_process(end_event: EventType, result_queue: "Queue[FrameDet
         except queue.Empty:
             pass
 
-        result = detector.step()
-        result_queue.put(result)
+        try:
+            result = detector.step()
+            result_queue.put(result, timeout=0.01)
+        except queue.Full:
+            pass
 
     detector.end()
+
+    while not options_queue.empty():
+        options_queue.get()
+
+    while not result_queue.empty():
+        result_queue.get()
