@@ -1,3 +1,5 @@
+import logging
+
 import time
 
 import cv2
@@ -6,6 +8,8 @@ import numpy as np
 from ledboardlib.scan.detector_options import DetectorOptions
 from ledboardlib.scan.exceptions import CameraOpenError, NoFrameCaptured
 from ledboardlib.scan.frame_detection_result import FrameDetectionResult
+
+_logger = logging.getLogger("Detector")
 
 
 class Detector:
@@ -18,7 +22,7 @@ class Detector:
         self._options = options
 
     def begin(self):
-        print("Opening camera...")
+        _logger.info("Opening camera...")
 
         self._video_capture = cv2.VideoCapture(self._options.camera_index)
         if not self._video_capture.isOpened():
@@ -27,7 +31,7 @@ class Detector:
         self._video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, self._options.camera_width)
         self._video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self._options.camera_height)
 
-        print("Camera opened successfully")
+        _logger.info("Camera opened successfully")
 
     def step(self) -> FrameDetectionResult:
         if self._video_capture is None:
@@ -50,11 +54,15 @@ class Detector:
         )
 
     def end(self):
-        print("Closing camera...")
+        _logger.info("Closing camera...")
         if self._video_capture is not None:
             self._video_capture.release()
             self._video_capture = None
-            print("Camera closed successfully")
+            _logger.info("Camera closed successfully")
+        else:
+            _logger.info("Camera already closed")
+
+        _logger.info("Detection ended")
 
     def _apply_blur(self):
         if self._options.blur_radius > 0:

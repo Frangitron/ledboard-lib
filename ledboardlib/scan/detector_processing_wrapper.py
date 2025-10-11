@@ -1,39 +1,32 @@
+import logging
 import queue
 from multiprocessing import Queue
+from multiprocessing.synchronize import Event as EventType
 
 from ledboardlib.scan.detector import Detector
 from ledboardlib.scan.detector_options import DetectorOptions
 from ledboardlib.scan.frame_detection_result import FrameDetectionResult
 
 
-def run_detection_in_process(command_queue: "Queue[str]", result_queue: "Queue[FrameDetectionResult]", options_queue: "Queue[DetectorOptions]", options: DetectorOptions):
+def run_detection_in_process(end_event: EventType, result_queue: "Queue[FrameDetectionResult]", options_queue: "Queue[DetectorOptions]"):
     """
     Ensures communication with the parent process when executed in a separate process.
     """
+    logging.basicConfig(level=logging.INFO)
+
+    options = options_queue.get(block=True)
     detector = Detector(options)
     detector.begin()
 
-    while True:
+    while not end_event.is_set():
         try:
-            # FIXME find out why not working on exit (maybe KeyboardInterrupt is propagated down?)
-            if not command_queue.empty():
-                command = command_queue.get(block=False)
-                print(f"Received command: {command}")
-                if command == "stop":
-                    break
-
-            if not options_queue.empty():
-                options = options_queue.get(block=False)
+            options = options_queue.get(timeout=0.01)
+            if options is not None:
                 detector.set_options(options)
+        except queue.Empty:
+            pass
 
-            result = detector.step()
-            try:
-                result_queue.put(result, block=False)
-            except queue.Full:
-                pass
-
-        except KeyboardInterrupt:
-            break
+        result = detector.step()
+        result_queue.put(result)
 
     detector.end()
-    print("Detection execution in process ended")
