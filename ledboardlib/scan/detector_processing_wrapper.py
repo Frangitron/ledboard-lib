@@ -5,6 +5,7 @@ from multiprocessing.synchronize import Event as EventType
 
 from ledboardlib.scan.detector import Detector
 from ledboardlib.scan.detector_options import DetectorOptions
+from ledboardlib.scan.exceptions import NoFrameCaptured
 from ledboardlib.scan.frame_detection_result import FrameDetectionResult
 
 
@@ -31,6 +32,9 @@ def run_detection_in_process(end_event: EventType, result_queue: "Queue[FrameDet
             result_queue.put(result, timeout=0.01)
         except queue.Full:
             pass
+        except NoFrameCaptured:
+            logging.warning("No frame captured")
+            break
 
     detector.end()
 
