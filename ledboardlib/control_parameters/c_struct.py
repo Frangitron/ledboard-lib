@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from ledboardlib.mapping_mode import MappingMode
 from pythonarduinoserial.types import *
 from pythonhelpers.dataclass_annotate import DataclassAnnotateMixin
 
@@ -13,6 +14,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     Data transfer object between Python and Arduino
     """
     dimmer: IntegerType() = 255
+
+    mapping_mode: IntegerType() = 0
 
     noise_octaves: IntegerType() = 2
     noise_scale: IntegerType() = 3
@@ -65,6 +68,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     def from_base(base: ControlParameters) -> "ControlParametersStruct":
         return ControlParametersStruct(
             dimmer=base.dimmer,
+            mapping_mode=base.mapping_mode.value,
             noise_octaves=base.noise_octaves,
             noise_scale=base.noise_scale,
             noise_scale_x=base.noise_scale_x,
@@ -102,6 +106,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     def to_base(self) -> ControlParameters:
         return ControlParameters(
             dimmer=int(self.dimmer),
+            mapping_mode=MappingMode(self.mapping_mode),
             noise_octaves=int(self.noise_octaves),
             noise_scale=int(self.noise_scale),
             noise_scale_x=int(self.noise_scale_x),

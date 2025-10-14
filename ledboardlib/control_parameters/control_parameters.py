@@ -1,11 +1,14 @@
 from dataclasses import dataclass
 
 from ledboardlib.color_mode import ColorMode
+from ledboardlib.mapping_mode import MappingMode
 
 
 @dataclass
 class ControlParameters:
     dimmer: int
+
+    mapping_mode: MappingMode
 
     noise_octaves: int
     noise_scale: int

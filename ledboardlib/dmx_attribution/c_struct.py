@@ -11,6 +11,10 @@ class DmxAttributionStruct(DmxAttribution, DataclassAnnotateMixin):
     """
     Data transfer object between Python and Arduino
     """
+    dimmer: IntegerType() = 0
+
+    mapping_mode: IntegerType() = 0
+
     noise_octaves: IntegerType() = 0
     noise_scale: IntegerType() = 0
 
