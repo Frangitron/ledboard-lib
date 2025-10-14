@@ -1,5 +1,6 @@
 import json
 import math
+from enum import Enum
 
 from ledboardlib import BoardApi, ColorFormat, GpioEnum, SamplingPoint
 
@@ -15,6 +16,8 @@ def compute_distances(points_):
 
 if __name__ == "__main__":
     port = "COM17"
+    update_board = False
+    save_to_json = True
     scanned_points_filepath = "detec-melinerion-14-10-2025.json"
 
     points = []
@@ -41,18 +44,6 @@ if __name__ == "__main__":
 
     strand_count = 1
     pixel_doubling = 1
-
-    board = BoardApi(serial_port_name=port)
-    configuration = board.get_configuration()
-    configuration.name = "Meliner"
-    configuration.led_color_format = ColorFormat.GRBW
-    configuration.led_count = strand_led_count
-    configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
-    configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
-    board.set_configuration(configuration)
-
-    print(configuration)
-
     sampling_points = list()
     for index, (x, y) in enumerate(scaled_points):
         new = SamplingPoint(
@@ -67,4 +58,26 @@ if __name__ == "__main__":
         sampling_points.append(new)
 
     print(f"Sampling points: {len(sampling_points)}")
-    board.set_sampling_points(sampling_points)
+
+    if save_to_json:
+        with open("sampling-points-melinerion.json", "w+") as file:
+            json.dump(
+                [sampling_point.to_dict() for sampling_point in sampling_points],
+                file,
+                indent=2,
+                default=lambda o: o.value if isinstance(o, Enum) else o.__dict__
+            )
+
+    if update_board:
+        board = BoardApi(serial_port_name=port)
+        configuration = board.get_configuration()
+        configuration.name = "Meliner"
+        configuration.led_color_format = ColorFormat.GRBW
+        configuration.led_count = strand_led_count
+        configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
+        configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
+        board.set_configuration(configuration)
+
+        print(configuration)
+
+        board.set_sampling_points(sampling_points)
