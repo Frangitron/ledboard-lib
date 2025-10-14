@@ -12,6 +12,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     """
     Data transfer object between Python and Arduino
     """
+    dimmer: IntegerType() = 255
+
     noise_octaves: IntegerType() = 2
     noise_scale: IntegerType() = 3
 
@@ -62,6 +64,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     @staticmethod
     def from_base(base: ControlParameters) -> "ControlParametersStruct":
         return ControlParametersStruct(
+            dimmer=base.dimmer,
             noise_octaves=base.noise_octaves,
             noise_scale=base.noise_scale,
             noise_scale_x=base.noise_scale_x,
@@ -98,6 +101,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
 
     def to_base(self) -> ControlParameters:
         return ControlParameters(
+            dimmer=int(self.dimmer),
             noise_octaves=int(self.noise_octaves),
             noise_scale=int(self.noise_scale),
             noise_scale_x=int(self.noise_scale_x),

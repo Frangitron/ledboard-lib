@@ -5,6 +5,8 @@ from ledboardlib.color_mode import ColorMode
 
 @dataclass
 class ControlParameters:
+    dimmer: int
+
     noise_octaves: int
     noise_scale: int
 
