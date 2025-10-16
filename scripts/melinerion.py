@@ -76,6 +76,7 @@ if __name__ == "__main__":
         configuration.led_count = strand_led_count
         configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
         configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
+        configuration.dmx_address = 73
         board.set_configuration(configuration)
 
         print(configuration)
