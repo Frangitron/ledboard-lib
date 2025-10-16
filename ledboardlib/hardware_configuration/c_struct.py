@@ -35,7 +35,7 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
 
     osc_receive_port: IntegerType() = 54321
 
-    dmx_address: IntegerType() = 73
+    dmx_address: IntegerType() = 1
 
     @staticmethod
     def from_base(base: HardwareConfiguration) -> "HardwareConfigurationStruct":
