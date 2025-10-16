@@ -2,7 +2,7 @@ import json
 import math
 from enum import Enum
 
-from ledboardlib import BoardApi, ColorFormat, GpioEnum, SamplingPoint
+from ledboardlib import BoardApi, ColorFormat, GpioEnum, SamplingPoint, InteropDataStore
 
 
 def compute_distances(points_):
@@ -67,6 +67,10 @@ if __name__ == "__main__":
                 indent=2,
                 default=lambda o: o.value if isinstance(o, Enum) else o.__dict__
             )
+
+        interop_store = InteropDataStore("interop-data-melinerion.json")
+        interop_store.data.sampling_points = sampling_points
+        interop_store.save()
 
     if update_board:
         board = BoardApi(serial_port_name=port)

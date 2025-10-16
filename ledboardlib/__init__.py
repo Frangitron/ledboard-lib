@@ -2,9 +2,14 @@ from ledboardlib import exceptions
 from ledboardlib.api.board import BoardApi
 from ledboardlib.api.board_detection import BoardDetectionApi
 from ledboardlib.color_format import ColorFormat
+from ledboardlib.color_mode import ColorMode
 from ledboardlib.control_parameters.control_parameters import ControlParameters
+from ledboardlib.fixture import Fixture
 from ledboardlib.hardware_configuration.gpio_enum import GpioEnum
 from ledboardlib.hardware_configuration.hardware_configuration import HardwareConfiguration
 from ledboardlib.hardware_info.hardware_info import HardwareInfo
+from ledboardlib.interop_data.dataclass import InteropData
+from ledboardlib.interop_data.store import InteropDataStore
 from ledboardlib.listed_board import ListedBoard
+from ledboardlib.mapping_mode import MappingMode
 from ledboardlib.sampling_point.sampling_point import SamplingPoint
