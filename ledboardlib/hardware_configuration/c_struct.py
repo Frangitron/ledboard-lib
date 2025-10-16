@@ -35,6 +35,8 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
 
     osc_receive_port: IntegerType() = 54321
 
+    dmx_address: IntegerType() = 73
+
     @staticmethod
     def from_base(base: HardwareConfiguration) -> "HardwareConfigurationStruct":
         return HardwareConfigurationStruct(
@@ -51,7 +53,8 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
             led_count=base.led_count,
             led_color_format=base.led_color_format.value,
             gamma_correction=base.gamma_correction,
-            osc_receive_port=base.osc_receive_port
+            osc_receive_port=base.osc_receive_port,
+            dmx_address=base.dmx_address
         )
 
     def to_base(self) -> HardwareConfiguration:
@@ -69,5 +72,6 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
             led_count=int(self.led_count),
             led_color_format=ColorFormat(self.led_color_format),
             gamma_correction=float(self.gamma_correction),
-            osc_receive_port=int(self.osc_receive_port)
+            osc_receive_port=int(self.osc_receive_port),
+            dmx_address=int(self.dmx_address)
         )

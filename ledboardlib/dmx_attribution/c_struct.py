@@ -13,26 +13,26 @@ class DmxAttributionStruct(DmxAttribution, DataclassAnnotateMixin):
     """
     dimmer: IntegerType() = 0
 
-    mapping_mode: IntegerType() = 0
+    mapping_mode: IntegerType() = 12
 
     noise_octaves: IntegerType() = 0
     noise_scale: IntegerType() = 0
 
-    noise_scale_x: IntegerType() = 0
-    noise_scale_y: IntegerType() = 0
+    noise_scale_x: IntegerType() = 7
+    noise_scale_y: IntegerType() = 8
 
-    noise_speed_x: IntegerType() = 0
-    noise_speed_y: IntegerType() = 0
-    noise_speed_z: IntegerType() = 0
+    noise_speed_x: IntegerType() = 9
+    noise_speed_y: IntegerType() = 10
+    noise_speed_z: IntegerType() = 11
 
-    noise_min: IntegerType() = 0
-    noise_max: IntegerType() = 0
+    noise_min: IntegerType() = 5
+    noise_max: IntegerType() = 6
 
     color_mode: IntegerType() = 0
 
-    noise_h: IntegerType() = 0
-    noise_s: IntegerType() = 0
-    noise_l: IntegerType() = 0
+    noise_h: IntegerType() = 1
+    noise_s: IntegerType() = 2
+    noise_l: IntegerType() = 3
 
     noise_r: IntegerType() = 0
     noise_g: IntegerType() = 0
@@ -55,7 +55,7 @@ class DmxAttributionStruct(DmxAttribution, DataclassAnnotateMixin):
     mask_y1: IntegerType() = 0
     mask_y2: IntegerType() = 0
 
-    shutter: IntegerType() = 0
+    shutter: IntegerType() = 4
 
     @staticmethod
     def from_base(base: DmxAttribution) -> "DmxAttributionStruct":

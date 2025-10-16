@@ -25,3 +25,5 @@ class HardwareConfiguration:
     gamma_correction: float
 
     osc_receive_port: int
+
+    dmx_address: int
