@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 
+from dataclasses_json import dataclass_json
+
 from ledboardlib.color_mode import ColorMode
 from ledboardlib.mapping_mode import MappingMode
 
 
+@dataclass_json
 @dataclass
 class ControlParameters:
     dimmer: int
