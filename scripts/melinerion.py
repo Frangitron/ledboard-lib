@@ -68,7 +68,9 @@ if __name__ == "__main__":
                 default=lambda o: o.value if isinstance(o, Enum) else o.__dict__
             )
 
-        interop_store = InteropDataStore("interop-data-melinerion.json")
+        interop_store = InteropDataStore(
+            "C:/Users/Ourson/PROJETS/ledboard/ledboard-translator-emulator/ledboardtranslatoremulator/resources/interop-data-melinerion.json"
+        )
         interop_store.data.sampling_points = sampling_points
         interop_store.save()
 
