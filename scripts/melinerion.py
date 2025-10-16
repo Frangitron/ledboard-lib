@@ -16,7 +16,8 @@ def compute_distances(points_):
 
 if __name__ == "__main__":
     port = "COM17"
-    update_board = False
+    update_board_config = True
+    update_board_points = False
     save_to_json = True
     scanned_points_filepath = "detec-melinerion-14-10-2025.json"
 
@@ -74,17 +75,18 @@ if __name__ == "__main__":
         interop_store.data.sampling_points = sampling_points
         interop_store.save()
 
-    if update_board:
-        board = BoardApi(serial_port_name=port)
+    board = BoardApi(serial_port_name=port)
+    if update_board_config:
         configuration = board.get_configuration()
         configuration.name = "Meliner"
         configuration.led_color_format = ColorFormat.GRBW
         configuration.led_count = strand_led_count
         configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
         configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
-        configuration.dmx_address = 73
+        configuration.dmx_address = 80
         board.set_configuration(configuration)
 
         print(configuration)
 
+    if update_board_points:
         board.set_sampling_points(sampling_points)
