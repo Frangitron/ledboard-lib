@@ -58,3 +58,6 @@ class ControlParameters:
 
     single_led: int
     single_led_brightness: int
+
+    dmx_enabled: bool
+

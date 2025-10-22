@@ -64,6 +64,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     single_led: IntegerType() = -1
     single_led_brightness: IntegerType() = 128
 
+    dmx_enabled: IntegerType() = 1
+
     @staticmethod
     def from_base(base: ControlParameters) -> "ControlParametersStruct":
         return ControlParametersStruct(
@@ -100,7 +102,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_y2=base.mask_y2,
             shutter=base.shutter,
             single_led=base.single_led,
-            single_led_brightness=base.single_led_brightness
+            single_led_brightness=base.single_led_brightness,
+            dmx_enabled=base.dmx_enabled
         )
 
     def to_base(self) -> ControlParameters:
@@ -138,5 +141,6 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_y2=int(self.mask_y2),
             shutter=int(self.shutter),
             single_led=int(self.single_led),
-            single_led_brightness=int(self.single_led_brightness)
+            single_led_brightness=int(self.single_led_brightness),
+            dmx_enabled=bool(self.dmx_enabled)
         )
