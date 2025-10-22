@@ -16,10 +16,10 @@ def compute_distances(points_):
 
 if __name__ == "__main__":
     port = "COM17"
-    update_board_config = True
-    update_board_points = False
+    update_board_config = False
+    update_board_points = True
     save_to_json = True
-    scanned_points_filepath = "detec-melinerion-14-10-2025.json"
+    scanned_points_filepath = "detec-melinerion-22-10-2025.json"
 
     points = []
     with open(scanned_points_filepath, "r") as file:
