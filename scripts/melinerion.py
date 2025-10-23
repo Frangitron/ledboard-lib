@@ -68,7 +68,7 @@ def main(port:str, update_board_config:bool, update_board_points: bool, save_to_
         configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
         configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
         configuration.gpio_dip_switch_first = GpioEnum.DipSwitchNoonBoard.value
-        configuration.dmx_address = 80  # TODO remove when DIP witch is confirmed to work
+        configuration.dmx_address = 80  # DIP switch pin 7 not working, keep setting value here
         board.set_configuration(configuration)
 
         print(configuration)
@@ -104,8 +104,8 @@ def find_interop_file(root='.') -> str | None:
 if __name__ == "__main__":
     main(
         port="COM17",
-        update_board_config=False,
-        update_board_points=True,
-        save_to_json=True,
+        update_board_config=True,
+        update_board_points=False,
+        save_to_json=False,
         scanned_points_filepath="detec-melinerion-22-10-2025.json"
     )
