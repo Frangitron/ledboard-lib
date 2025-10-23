@@ -22,6 +22,7 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
     gpio_led_first: IntegerType() = 6  # default for Jan 2024 LedBoard
     gpio_button_a: IntegerType() = 9
     gpio_button_b: IntegerType() = 9
+    gpio_dip_switch_first: IntegerType() = 1  # only NOON board has it so far, and it uses pins [1-10]
 
     wifi_password: StringType(16) = "0123456789ABCDE"  # includes null terminator, length 16 to avoid manual bytes padding
     wifi_ip_address: BytesType(4) = bytes([192, 168, 0, 201])
@@ -46,6 +47,7 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
             gpio_led_first=base.gpio_led_first,
             gpio_button_a=base.gpio_button_a,
             gpio_button_b=base.gpio_button_b,
+            gpio_dip_switch_first=base.gpio_dip_switch_first,
             wifi_password=base.wifi_password,
             wifi_ip_address=base.wifi_ip_address.packed,
             wifi_gateway=base.wifi_gateway.packed,
@@ -65,6 +67,7 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
             gpio_led_first=int(self.gpio_led_first),
             gpio_button_a=int(self.gpio_button_a),
             gpio_button_b=int(self.gpio_button_b),
+            gpio_dip_switch_first=int(self.gpio_dip_switch_first),
             wifi_password=stripped_without_terminator(self.wifi_password),
             wifi_ip_address=IPv4Address(self.wifi_ip_address),
             wifi_gateway=IPv4Address(self.wifi_gateway),

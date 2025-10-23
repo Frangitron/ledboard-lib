@@ -8,3 +8,4 @@ class GpioEnum(Enum):
     ButtonBluePipesA = 9
     ButtonBluePipesB = 10
     DmxNoonBoard = 11
+    DipSwitchNoonBoard = 1  # to 10
