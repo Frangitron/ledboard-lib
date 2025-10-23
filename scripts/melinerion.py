@@ -1,26 +1,12 @@
 import json
 import math
+import os
 from enum import Enum
 
 from ledboardlib import BoardApi, ColorFormat, GpioEnum, SamplingPoint, InteropDataStore
 
 
-def compute_distances(points_):
-    distances_ = []
-    for i in range(len(points_) - 1):
-        x0, y0 = points_[i]
-        x1, y1 = points_[i + 1]
-        distances_.append(math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2))
-    return distances_
-
-
-if __name__ == "__main__":
-    port = "COM17"
-    update_board_config = False
-    update_board_points = True
-    save_to_json = True
-    scanned_points_filepath = "detec-melinerion-22-10-2025.json"
-
+def main(port:str, update_board_config:bool, update_board_points: bool, save_to_json: bool, scanned_points_filepath: str):
     points = []
     with open(scanned_points_filepath, "r") as file:
         points = json.load(file)
@@ -69,9 +55,7 @@ if __name__ == "__main__":
                 default=lambda o: o.value if isinstance(o, Enum) else o.__dict__
             )
 
-        interop_store = InteropDataStore(
-            "C:/Users/Ourson/PROJETS/ledboard/ledboard-translator-emulator/ledboardtranslatoremulator/resources/interop-data-melinerion.json"
-        )
+        interop_store = InteropDataStore(find_interop_file())
         interop_store.data.sampling_points = sampling_points
         interop_store.save()
 
@@ -83,10 +67,45 @@ if __name__ == "__main__":
         configuration.led_count = strand_led_count
         configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
         configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
-        configuration.dmx_address = 80
+        configuration.gpio_dip_switch_first = GpioEnum.DipSwitchNoonBoard.value
+        configuration.dmx_address = 80  # TODO remove when DIP witch is confirmed to work
         board.set_configuration(configuration)
 
         print(configuration)
 
     if update_board_points:
         board.set_sampling_points(sampling_points)
+
+
+def compute_distances(points_):
+    distances_ = []
+    for i in range(len(points_) - 1):
+        x0, y0 = points_[i]
+        x1, y1 = points_[i + 1]
+        distances_.append(math.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2))
+    return distances_
+
+
+def find_interop_file(root='.') -> str | None:
+    root = os.path.abspath(root)
+
+    for dir_ in os.listdir(root):
+        candidate = os.path.join(root, dir_, "ledboardtranslatoremulator/resources/interop-data-melinerion.json")
+        if os.path.exists(candidate):
+            return candidate
+
+    upper = os.path.dirname(root)
+    if upper == root:
+        return None
+
+    return find_interop_file(upper)
+
+
+if __name__ == "__main__":
+    main(
+        port="COM17",
+        update_board_config=False,
+        update_board_points=True,
+        save_to_json=True,
+        scanned_points_filepath="detec-melinerion-22-10-2025.json"
+    )
