@@ -213,6 +213,7 @@ def elephanz(port: str):
     configuration = board.get_configuration()
     configuration.name = "Elephan"
     configuration.led_color_format = ColorFormat.GRBW
+    configuration.gpio_buttons_enable = False
     configuration.led_count = strand_led_count
     configuration.gpio_led_first = GpioEnum.LedsAllanBoard.value
     configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value

@@ -14,6 +14,7 @@ class HardwareConfiguration:
     gpio_button_a: int
     gpio_button_b: int
     gpio_dip_switch_first: int
+    gpio_buttons_enable: bool
 
     wifi_password: str
     wifi_ip_address: IPv4Address

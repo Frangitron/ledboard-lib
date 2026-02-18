@@ -23,9 +23,10 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
     gpio_button_a: IntegerType() = 9
     gpio_button_b: IntegerType() = 9
     gpio_dip_switch_first: IntegerType() = 1  # only NOON board has it so far, and it uses pins [1-10]
+    gpio_buttons_enable: IntegerType() = 1
 
     wifi_password: StringType(16) = "0123456789ABCDE"  # includes null terminator, length 16 to avoid manual bytes padding
-    wifi_ip_address: BytesType(4) = bytes([192, 168, 0, 201])
+    wifi_ip_address: BytesType(4) = bytes([192, 168, 20, 201])
     wifi_gateway: BytesType(4) = bytes([192, 168, 0, 1])
     wifi_subnet: BytesType(4) = bytes([255, 255, 0, 0])
 
@@ -48,6 +49,7 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
             gpio_button_a=base.gpio_button_a,
             gpio_button_b=base.gpio_button_b,
             gpio_dip_switch_first=base.gpio_dip_switch_first,
+            gpio_buttons_enable=int(base.gpio_buttons_enable),
             wifi_password=base.wifi_password,
             wifi_ip_address=base.wifi_ip_address.packed,
             wifi_gateway=base.wifi_gateway.packed,
@@ -68,6 +70,7 @@ class HardwareConfigurationStruct(HardwareConfiguration, DataclassAnnotateMixin)
             gpio_button_a=int(self.gpio_button_a),
             gpio_button_b=int(self.gpio_button_b),
             gpio_dip_switch_first=int(self.gpio_dip_switch_first),
+            gpio_buttons_enable=bool(self.gpio_buttons_enable),
             wifi_password=stripped_without_terminator(self.wifi_password),
             wifi_ip_address=IPv4Address(self.wifi_ip_address),
             wifi_gateway=IPv4Address(self.wifi_gateway),
