@@ -203,13 +203,50 @@ def melinerion(port: str):
     board.set_sampling_points(sampling_points)
 
 
+def elephanz(port: str):
+    strand_led_count = 600
+
+    strand_count = 1
+    pixel_doubling = 1
+
+    board = BoardApi(serial_port_name=port)
+    configuration = board.get_configuration()
+    configuration.name = "Elephan"
+    configuration.led_color_format = ColorFormat.GRBW
+    configuration.led_count = strand_led_count
+    configuration.gpio_led_first = GpioEnum.LedsAllanBoard.value
+    configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
+    board.set_configuration(configuration)
+
+    print(configuration)
+
+    sampling_points = list()
+    for r in range(strand_count):
+        for s in range(int(strand_led_count / pixel_doubling)):
+            index = (r * int(strand_led_count / pixel_doubling)) + s
+            new = SamplingPoint(
+                index=index,
+                x=s * pixel_doubling,
+                y=r,
+                universe_number=0,
+                universe_channel=index * 3,
+                color_format=ColorFormat.GRB,
+                led_indices=[index * pixel_doubling + i for i in range(pixel_doubling)]
+            )
+            sampling_points.append(new)
+
+    print(f"Sampling points: {len(sampling_points)}")
+    board.set_sampling_points(sampling_points)
+
+
 if __name__ == '__main__':
-    com = "COM5"
+    com = "COM12"
     print_info(com)
     # waveshare_10x16(com)
     # strip_5m(com, 40)
     # rect_256(com)
     # set_speed_z(com, 1)
     # blue_pipes(com)
-    melinerion(com)
+    # melinerion(com)
+    elephanz(com)
     print("Done.")
