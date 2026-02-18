@@ -20,6 +20,7 @@ else:
 
     def is_drive_pico(drive: str) -> bool:
         try:
-            return win32api.GetVolumeInformation(drive)[0] == 'RPI-RP2'
+            name = win32api.GetVolumeInformation(drive)[0]
+            return  name in ['RPI-RP2', 'RP2350']
         except pywintypes.error as e:
             raise OSError(e)
