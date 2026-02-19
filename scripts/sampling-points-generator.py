@@ -217,6 +217,8 @@ def elephanz(port: str):
     configuration.led_count = strand_led_count
     configuration.gpio_led_first = GpioEnum.LedsAllanBoard.value
     configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
+    configuration.use_dip_switch = False
+    configuration.dmx_address = 1
     board.set_configuration(configuration)
 
     print(configuration)
@@ -237,12 +239,12 @@ def elephanz(port: str):
             sampling_points.append(new)
 
     print(f"Sampling points: {len(sampling_points)}")
+    print("Please wait while the board is configured...")
     board.set_sampling_points(sampling_points)
 
 
 if __name__ == '__main__':
     com = "COM12"
-    print_info(com)
     # waveshare_10x16(com)
     # strip_5m(com, 40)
     # rect_256(com)
@@ -250,4 +252,5 @@ if __name__ == '__main__':
     # blue_pipes(com)
     # melinerion(com)
     elephanz(com)
+    print_info(com)
     print("Done.")

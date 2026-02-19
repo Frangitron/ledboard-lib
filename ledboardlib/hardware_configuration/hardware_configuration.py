@@ -28,4 +28,5 @@ class HardwareConfiguration:
 
     osc_receive_port: int
 
+    use_dip_switch: bool
     dmx_address: int
