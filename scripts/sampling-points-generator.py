@@ -1,6 +1,7 @@
 """
 LEGACY code waiting for JSON files
 """
+from ipaddress import IPv4Address
 
 from ledboardlib import BoardApi, SamplingPoint, GpioEnum, ColorFormat
 
@@ -215,6 +216,7 @@ def elephanz(port: str):
     configuration.led_color_format = ColorFormat.GRBW
     configuration.gpio_buttons_enable = False
     configuration.led_count = strand_led_count
+    configuration.wifi_ip_address = IPv4Address("192.168.20.30")
     configuration.gpio_led_first = GpioEnum.LedsAllanBoard.value
     configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
     configuration.use_dip_switch = False
@@ -244,7 +246,7 @@ def elephanz(port: str):
 
 
 if __name__ == '__main__':
-    com = "COM12"
+    com = "COM18"
     # waveshare_10x16(com)
     # strip_5m(com, 40)
     # rect_256(com)
