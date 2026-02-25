@@ -2,6 +2,7 @@ import json
 import math
 import os
 from enum import Enum
+from ipaddress import IPv4Address
 
 from ledboardlib import BoardApi, ColorFormat, GpioEnum, SamplingPoint, InteropDataStore
 
@@ -65,10 +66,12 @@ def main(port:str, update_board_config:bool, update_board_points: bool, save_to_
         configuration.name = "Elephan"
         configuration.led_color_format = ColorFormat.GRBW
         configuration.led_count = strand_led_count
-        configuration.gpio_led_first = GpioEnum.LedsNoonBoard.value
+        configuration.wifi_ip_address = IPv4Address('2.0.0.100')
+        configuration.gpio_led_first = GpioEnum.LedsAllanBoard.value
         configuration.gpio_dmx_input = GpioEnum.DmxNoonBoard.value
         configuration.gpio_dip_switch_first = GpioEnum.DipSwitchNoonBoard.value
-        configuration.dmx_address = 80  # DIP switch pin 7 not working, keep setting value here
+        configuration.gpio_buttons_enable = False
+        configuration.dmx_address = 1
         board.set_configuration(configuration)
 
         print(configuration)
@@ -104,7 +107,7 @@ def find_interop_file(root='.') -> str | None:
 if __name__ == "__main__":
     main(
         port="COM18",
-        update_board_config=False,
+        update_board_config=True,
         update_board_points=False,
         save_to_json=True,
         scanned_points_filepath="detec-elephanz-25-02-2026.json"
