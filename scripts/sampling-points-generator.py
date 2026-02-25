@@ -205,7 +205,7 @@ def melinerion(port: str):
 
 
 def elephanz(port: str):
-    strand_led_count = 600
+    strand_led_count = 200
 
     strand_count = 1
     pixel_doubling = 1
