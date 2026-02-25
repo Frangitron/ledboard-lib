@@ -11,28 +11,28 @@ class DmxAttributionStruct(DmxAttribution, DataclassAnnotateMixin):
     """
     Data transfer object between Python and Arduino
     """
-    dimmer: IntegerType() = 0
+    dimmer: IntegerType() = 1
 
-    mapping_mode: IntegerType() = 12
+    mapping_mode: IntegerType() = 7
 
     noise_octaves: IntegerType() = 0
     noise_scale: IntegerType() = 0
 
-    noise_scale_x: IntegerType() = 7
-    noise_scale_y: IntegerType() = 8
+    noise_scale_x: IntegerType() = 8
+    noise_scale_y: IntegerType() = 9
 
-    noise_speed_x: IntegerType() = 9
-    noise_speed_y: IntegerType() = 10
-    noise_speed_z: IntegerType() = 11
+    noise_speed_x: IntegerType() = 10
+    noise_speed_y: IntegerType() = 11
+    noise_speed_z: IntegerType() = 12
 
-    noise_min: IntegerType() = 5
-    noise_max: IntegerType() = 6
+    noise_min: IntegerType() = 13
+    noise_max: IntegerType() = 14
 
-    color_mode: IntegerType() = 0
+    color_mode: IntegerType() = 6
 
-    noise_h: IntegerType() = 1
-    noise_s: IntegerType() = 2
-    noise_l: IntegerType() = 3
+    noise_h: IntegerType() = 3
+    noise_s: IntegerType() = 4
+    noise_l: IntegerType() = 5
 
     noise_r: IntegerType() = 0
     noise_g: IntegerType() = 0
@@ -55,7 +55,7 @@ class DmxAttributionStruct(DmxAttribution, DataclassAnnotateMixin):
     mask_y1: IntegerType() = 0
     mask_y2: IntegerType() = 0
 
-    shutter: IntegerType() = 4
+    shutter: IntegerType() = 2
 
     @staticmethod
     def from_base(base: DmxAttribution) -> "DmxAttributionStruct":
