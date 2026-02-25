@@ -55,6 +55,8 @@ class DmxAttributionStruct(DmxAttribution, DataclassAnnotateMixin):
     mask_y1: IntegerType() = 0
     mask_y2: IntegerType() = 0
 
+    strand_mask: IntegerType() = 15
+
     shutter: IntegerType() = 2
 
     @staticmethod

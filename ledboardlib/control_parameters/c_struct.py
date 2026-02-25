@@ -58,6 +58,8 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
     mask_y1: IntegerType() = 0
     mask_y2: IntegerType() = 0
 
+    strand_mask: IntegerType() = 0
+
     shutter: IntegerType() = 0
 
     # -1 means normal behavior, [0-32 767] illuminates LED at the given index
@@ -100,6 +102,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_x2=base.mask_x2,
             mask_y1=base.mask_y1,
             mask_y2=base.mask_y2,
+            strand_mask=base.strand_mask,
             shutter=base.shutter,
             single_led=base.single_led,
             single_led_brightness=base.single_led_brightness,
@@ -139,6 +142,7 @@ class ControlParametersStruct(ControlParameters, DataclassAnnotateMixin):
             mask_x2=int(self.mask_x2),
             mask_y1=int(self.mask_y1),
             mask_y2=int(self.mask_y2),
+            strand_mask=int(self.strand_mask),
             shutter=int(self.shutter),
             single_led=int(self.single_led),
             single_led_brightness=int(self.single_led_brightness),
