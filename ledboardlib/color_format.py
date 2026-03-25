@@ -6,3 +6,4 @@ class ColorFormat(Enum):
     GRB = 1
     RGBW = 2
     GRBW = 3
+    BRG = 4
