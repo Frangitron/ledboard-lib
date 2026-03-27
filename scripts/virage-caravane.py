@@ -25,10 +25,10 @@ def main(port:str, update_board_config:bool, update_board_points: bool):
         configuration.name = "Caravan"
         configuration.led_color_format = ColorFormat.RGB
         configuration.led_count = strand_led_count
-        configuration.gpio_led_first = GpioEnum.Ledboard2GpioD.value
+        configuration.gpio_led_first = GpioEnum.VirageVanLedFirst.value
         configuration.gpio_buttons_enable = True
-        configuration.gpio_button_a = GpioEnum.Ledboard2GpioB.value
-        configuration.gpio_button_b = GpioEnum.Ledboard2GpioC.value
+        configuration.gpio_button_a = GpioEnum.VirageVanButtonA.value
+        configuration.gpio_button_b = GpioEnum.VirageVanButtonB.value
         configuration.dmx_address = 1
         board.set_configuration(configuration)
 
@@ -40,7 +40,7 @@ def main(port:str, update_board_config:bool, update_board_points: bool):
 
 if __name__ == "__main__":
     main(
-        port="COM4",
+        port="COM5",
         update_board_config=True,
-        update_board_points=False
+        update_board_points=True
     )

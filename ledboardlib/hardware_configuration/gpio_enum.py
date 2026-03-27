@@ -17,3 +17,6 @@ class GpioEnum(Enum):
     Ledboard2Line2 = 5
     Ledboard2Line3 = 6
     Ledboard2Line4 = 7
+    VirageVanButtonA = 9
+    VirageVanButtonB = 10  # Not connected!
+    VirageVanLedFirst = 11
